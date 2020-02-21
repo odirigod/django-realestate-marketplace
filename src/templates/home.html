@@ -1,0 +1,428 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+
+
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/elements.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/elements_responsive.css' %}">
+
+<style type="text/css">
+	.city_overlay_2 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: unset; 
+		visibility: visible;
+		opacity: 1;
+		transition: all 800ms ease;
+	}
+	.city:hover .city_overlay_2 {
+		visibility: hidden;
+		opacity: 0;
+	}
+	.city_overlay_2 a {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.city:hover .city_overlay_2 {
+		visibility: hidden;
+		opacity: 0;
+	}
+	.city_title_2 {
+		font-size: 30px;
+		font-weight: 600;
+		color: #FFFFFF;
+		/*transition: all 800ms ease;*/
+	}
+	.city:hover .city_title_2 {
+		transform: translateX(0px);
+	}
+	.city_subtitle_2 {
+		font-size: 16px;
+		font-weight: 600;
+		color: #FFFFFF;
+		/*transition: all 800ms ease;*/
+	}
+	.city:hover .city_subtitle_2 {
+		transform: translateX(0px);
+	}
+
+</style>
+
+{% endblock extra_styles %}
+
+
+	
+	<!-- Home -->
+	{% block content %}
+
+	<div class="home">
+
+		<!-- Home Slider -->
+		<div class="home_slider_container">
+			<div class="owl-carousel owl-theme home_slider">
+				
+				<!-- Slide -->
+				<div class="owl-item">
+					<div class="home_slider_background" style="background-image:url(/static/images/banner1.jpg)"></div>
+					<div class="slide_container">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<div class="slide_content">
+										<!-- <div class="home_subtitle">super offer</div> -->
+										<div class="home_title" style="text-align:center;">Find your dream home</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Home search -->
+	{% include 'search.html' %}
+
+	<!-- Featured -->
+	<div class="recent">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title">Featured Properties</div>
+					<div class="section_subtitle">Find your dream home</div>
+				</div>
+			</div>
+			<div class="row recent_row">
+				<div class="col">
+					<div class="recent_slider_container">
+						<div class="owl-carousel owl-theme recent_slider">
+
+							<!-- Slide -->
+							{% for instance in featured_list %}
+							<div class="owl-item">
+								<div class="recent_item">
+									<div class="recent_item_inner">
+										<div class="recent_item_image">
+											<a href="{{ instance.get_absolute_url }}">
+												{% if instance.get_image_url %}
+													<img src="{{ instance.get_image_url }}" alt="" style="max-height: 500px; width: auto;">
+												{% else %}
+													<img src="{% static 'images/no_image.png' %}" alt="">
+												{% endif %}
+											</a>
+											<div class="tag_featured property_tag">
+												<a href="#">{{ instance.category }}</a>
+											</div>
+										</div>
+										<div class="recent_item_body text-center">
+											<div class="recent_item_location">{{ instance.state }}</div>
+											<div class="recent_item_title"><a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></div>
+											<div class="recent_item_price">&#8358; {{ instance.price|floatformat|intcomma }}</div>
+										</div>
+										<div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
+											{% if instance.area %}<div><div class="recent_icon"><img src="{% static 'images/icon_1.png' %}" alt=""></div><span>{{ instance.area }} sqm</span></div>{% endif %}
+											{% if instance.bedroom %}<div><div class="recent_icon"><img src="{% static 'images/icon_2.png' %}" alt=""></div><span>{{ instance.bedroom }} bedrooms</span></div>{% endif %}
+											{% if instance.bedroom %}<div><div class="recent_icon"><img src="{% static 'images/icon_3.png' %}" alt=""></div><span>{{ instance.bathroom }} bathrooms</span></div>{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+
+						</div>
+
+						<div class="recent_slider_nav_container d-flex flex-row align-items-start justify-content-start">
+							<div class="recent_slider_nav recent_slider_prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+							<div class="recent_slider_nav recent_slider_next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+						</div>
+					</div>
+					<!-- <div class="button recent_button"><a href="#">see more</a></div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Cities -->
+
+	<div class="cities">
+		<!-- <div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title">Find properties in these cities</div>
+					<div class="section_subtitle">Search your dream home</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="cities_container d-flex flex-row flex-wrap align-items-start justify-content-between">
+		
+			<div class="city">
+				<img src="{% static 'images/city_lagos.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Lagos" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Lagos</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Lagos" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Lagos</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="city">
+				<img src="{% static 'images/city_abuja.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Abuja" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Abuja</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Abuja" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Abuja</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="city">
+				<img src="{% static 'images/city_enugu.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Enugu" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Enugu</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Enugu" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Enugu</div>
+					</a>
+				</div>
+			</div>
+			
+			<div class="city">
+				<img src="{% static 'images/city_ph.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Rivers" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Port Harcourt</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Rivers" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Port Harcourt</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="city">
+				<img src="{% static 'images/city_uyo.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Akwa+Ibom" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Uyo</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Akwa+Ibom" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Uyo</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="city">
+				<img src="{% static 'images/city_kaduna.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Kaduna" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Kaduna</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Kaduna" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Kaduna</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="city">
+				<img src="{% static 'images/city_calabar.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Cross+River" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Calabar</div>
+					</a>	
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Cross+River" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Calabar</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="city">
+				<img src="{% static 'images/city_kano.jpg' %}" alt="">
+				<div class="city_overlay">
+					<a href="{% url 'products:product_list' %}?state=Kano" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle">Search Properties In</div>
+						<div class="city_title">Kano</div>
+					</a>
+				</div>
+				<div class="city_overlay_2">
+					<a href="{% url 'products:product_list' %}?state=Kano" class="d-flex flex-column align-items-center justify-content-center">
+						<div class="city_subtitle_2">Search Properties In</div>
+						<div class="city_title_2">Kano</div>
+					</a>
+				</div>
+			</div>
+		</div> -->
+	</div>
+
+
+
+
+	<!-- Testimonials -->
+
+	<!-- <div class="testimonials">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title">What our clients say</div>
+					<div class="section_subtitle">Search your dream home</div>
+				</div>
+			</div>
+			<div class="row testimonials_row">
+					
+				<div class="col-lg-4 testimonial_col">
+					<div class="testimonial">
+						<div class="testimonial_title">Amazing home for me</div>
+						<div class="testimonial_text">Homelink have made search for property easy for busy people like me who have little or no time looking.</div>
+						<div class="testimonial_author_image"><img src="{% static 'images/testimonial_1.jpg' %}" alt=""></div>
+						<div class="testimonial_author"><span>Bob Igwe, Lagos</span></div>
+					</div>
+				</div>
+
+				
+				<div class="col-lg-4 testimonial_col">
+					<div class="testimonial">
+						<div class="testimonial_title">Friendly Realtors</div>
+						<div class="testimonial_text">Homelink service is very helpful, Am amazed at how they are able to organise agents in several places.</div>
+						<div class="testimonial_author_image"><img src="{% static 'images/testimonial_2.jpg' %}" alt=""></div>
+						<div class="testimonial_author"><span>Frank Duru, Abuja</span></div>
+					</div>
+				</div>
+
+				
+				<div class="col-lg-4 testimonial_col">
+					<div class="testimonial">
+						<div class="testimonial_title">Very good communication</div>
+						<div class="testimonial_text">They have made getting an apartment more comfortable and easier with their improved method.</div>
+						<div class="testimonial_author_image"><img src="{% static 'images/testimonial_3.jpg' %}" alt=""></div>
+						<div class="testimonial_author"><span>Chioma Ugwu, Enugu</span></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div> -->
+
+
+
+
+			<div class="testimonials">
+				<div class="container">
+
+					<!-- Icon Boxes -->
+
+					<div class="icon_boxes" style="margin-top: 0px;">
+						<div class="section_title" style="text-align: center;">We have the most listings and constant updates.</div>
+						<div class="icon_box_title" style="text-align: center;">So you’ll never miss out.</div>
+						<div class="row icon_boxes_row">
+							
+							<!-- Icon Box -->
+							<div class="col-lg-4 icon_box_col">
+								<div class="icon_box">
+									<div class="icon_box_title_container d-flex flex-row align-items-center justify-content-start">
+										<div class="icon_box_icon d-flex flex-column align-items-center justify-content-center"><img src="{% static 'images/icon_4.png' %}" alt=""></div>
+										<div class="icon_box_title"><a href="{% url 'products:product_list' %}?category=For Sale">Buy a home</a></div>
+									</div>
+									<div class="icon_box_text">
+										<p>Find your place with an immersive photo experience and the most listings, including things you won’t find anywhere else. <a href="{% url 'products:product_list' %}?category=For Sale">[Search homes]</a> </p>
+										<!-- <button class="sidebar_search_button search_form_button">More</button> -->
+									</div>
+								</div>
+							</div>
+
+							<!-- Icon Box -->
+							<div class="col-lg-4 icon_box_col">
+								<div class="icon_box">
+									<div class="icon_box_title_container d-flex flex-row align-items-center justify-content-start">
+										<div class="icon_box_icon"><img src="{% static 'images/icon_6.png' %}" alt=""></div>
+										<div class="icon_box_title"><a href="{% url 'dashboard:product_create' %}">Sell a home</a></div>
+									</div>
+									<div class="icon_box_text">
+										<p>Whether you sell with new Homelink Offers™ or take another approach, we’ll help you navigate the path to a successful sale. <a href="{% url 'dashboard:product_create' %}">[Get started]</a></p>
+									</div>
+								</div>
+							</div>
+
+							<!-- Icon Box -->
+							<div class="col-lg-4 icon_box_col">
+								<div class="icon_box">
+									<div class="icon_box_title_container d-flex flex-row align-items-center justify-content-start">
+										<div class="icon_box_icon"><img src="{% static 'images/icon_5.png' %}" alt=""></div>
+										<div class="icon_box_title"><a href="{% url 'products:product_list' %}?category=For Rent">Rent a home</a></div>
+									</div>
+									<div class="icon_box_text">
+										<p>We’re creating a seamless online experience – from shopping on the largest rental network, to applying, to paying rent. <a href="{% url 'products:product_list' %}?category=For Rent">[Find rentals]</a></p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+	{% endblock content %}
+
+	
+	<!-- Footer -->
+	{% include 'footer.html' %}
+</div>
+{% block scripts %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+
+
+
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script src="{% static 'js/elements.js' %}"></script>
+{% endblock scripts %}
+</body>
+</html>
+

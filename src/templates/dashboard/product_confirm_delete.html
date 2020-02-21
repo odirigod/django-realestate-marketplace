@@ -1,0 +1,88 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Delete Property</h4> </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li><a href="{% url 'dashboard:product_list' %}">Properties</a></li>
+                        <li class="active">Delete Property</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 col-xs-12">
+                    <div class="white-box">
+                        <p class="lead text-center">Are you sure you want to delete this property?</p>
+                        <br>
+                        <form method="POST">{% csrf_token %}
+                            <ul class="price-list">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <a href="{{ object.get_absolute_url }}">
+                                            {% if object.get_image_url %}
+                                            <img src="{{ object.get_image_url }}" class="img-responsive img-thumbnai" alt="">
+                                            {% else %}
+                                            <img src="{% static 'images/no_image.png' %}" class="img-responsive" alt="">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="col-md-7 client-request">
+                                        <li>
+                                            <span class="lead"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></span><br>
+                                            <span>{{ object.address }}, {{ object.city }}, {{ object.state }}</span><br>
+                                            <span>PID: {{ object.pid }}</span> - <span class="" style="font-weight: bolder;"> {% if object.active and object.available %}<span class="text-success">Active</span>{% elif object.active and not object.available %}<span class="text-primary">{% if object.category == 'For Sale' %} Sold {% else %} Rented {% endif %}</span> {% else %}<span class="text-danger">Waiting Approval</span>{% endif %}</span>
+                                        </li>
+                                        <li>
+                                            <span>{{ object.category }} ({{ object.property_type }})</span><br>
+                                            <span>Posted on: {{ object.timestamp }}</span><br>
+                                            <span class="lead">&#8358; {{ object.price|floatformat|intcomma }}</span><br>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-danger"><i class="fa fa-trash"></i> Confirm Delete</button>
+                                            <a href="{% url 'dashboard:product_list' %}" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a> 
+                                        </li>                      
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>                     
+                    </div>
+                </form>
+            </div>
+            <!-- /.row -->
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}

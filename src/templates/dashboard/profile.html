@@ -1,0 +1,109 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            {% block content %}
+            <div class="container-fluid">
+                <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Profile page</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                        <ol class="breadcrumb">
+                            <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                            <li class="active">Profile page</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            
+                {% if request.user.profile.subscription.end_date < today %} 
+                    {% include 'dashboard/subscription_expired.html' %}
+                {% endif %}
+
+                
+                <!-- .row -->
+                <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        <div class="white-box">
+                            <div class="user-bg"> <img width="100%" alt="user" src="{% static 'dashboard/plugins/images/large/img1.jpg' %}">
+                                <div class="overlay-box">
+                                    <div class="user-content">
+                                        <a href="javascript:void(0)">
+                                            {% if request.user.profile.image %}
+                                                <img src="{{ request.user.profile.image.url }}" class="thumb-lg img-circle" alt="">
+                                            {% else %}
+                                                <img src="{% static 'dashboard/plugins/images/users/avatar.png' %}" class="thumb-lg img-circle" alt="img">
+                                            {% endif %}
+                                        </a>
+                                        <h4 class="text-white">{{ request.user.get_full_name }}</h4>
+                                        <h5 class="text-white">{{ request.user.email }}</h5> </div>
+                                </div>
+                            </div>
+
+                            <div class="user-btm-box">
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <p><b>User ID:</b> <br><span style="font-weight: bolder;">{{ request.user.profile.ref }}</span> <!-- <br><a href="/accounts/password/change/" class="btn btn-primary btn-sm">Change Password</a> --></p>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <p><b>Current Plan:</b> <br><span style="font-weight: bolder;">{{ request.user.profile.subscription.plan }}</span> <!-- <br><a href="{% url 'dashboard:subscription' %}" class="btn btn-success btn-xs">Upgrade</a> --></p>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <p><b>Expires On:</b> <br><span style="font-weight: bolder;">{{ request.user.profile.subscription.end_date|date }}</span> <!-- <br><a href="{% url 'dashboard:subscription' %}" class="btn btn-success btn-xs">Extend</a> --></p>
+                                </div>
+                                <div>
+                                    <p class="text-center"><a href="/accounts/password/change/" class="btn btn-primary btn">Change Password</a></p>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <div class="white-box">
+                        <p class="text-danger text-center">NB: Fields with asterisk(*) are compulsory </p><br><br>
+                            <form action="." method="POST" class="form-horizontal form-material" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        {{ form|crispy }}
+                                    </div>                                
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success btn-block">Update Profile</button>
+                                        <!-- <div class="text-center">OR</div>
+                                        <a href="/accounts/password/change/" class="btn btn-primary btn-block">Change Password</a> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            {% endblock content %}
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2019 &copy; Homelink.ng </footer>
+        </div>
+        <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}

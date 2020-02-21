@@ -1,0 +1,73 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+<!-- Header -->
+	<header class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="logo">
+							<a href="/"><img src="{% static 'images/logo.png' %}" alt=""></a>
+						</div>
+						<nav class="main_nav">
+							<ul>
+								<li class="active"><a href="/">Home</a></li>
+								<li><a href="{% url 'posts:list' %}?q={{ sale }}">For Sale</a></li>
+								<li><a href="{% url 'posts:list' %}?q={{ rent }}">For Rent</a></li>
+								<li><a href="{% url 'posts:list' %}?q={{ shortlet }}">For ShortLet</a></li>
+								<!-- <li><a href="/posts/">Posts</a></li> -->
+								<li><a href="/dashboard/"> Post your property</a></li>
+								{% if not user.is_authenticated %}
+								<li><a href="/accounts/login/">Login</a> <span class="text-default">or</span> <a href="/accounts/signup/">Register</a></li>
+								{% else %}
+								<li><a href="/accounts/logout/">Logout</a></li>
+								{% endif %}
+							</ul>
+						</nav>
+						<!-- <div class="phone_num ml-auto">
+							<a href="#">
+								<div class="phone_num_inner">
+									<span><i class="fa fa-send"></i> List your property</span>
+								</div>
+							</a>
+						</div> -->
+						<!-- <nav class="main_nav">
+							<ul>
+								{% if not user.is_authenticated %}
+								<li><a href="/accounts/login/">Login</a><a>or</a> <a href="/accounts/signup/">Register</a></li>
+								{% else %}
+								<li><a href="/accounts/logout/">Logout</a></li>
+								{% endif %}
+							</ul>
+						</nav> -->
+						<div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Menu -->
+	<div class="menu trans_500">
+		<div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
+			<div class="menu_close_container"><div class="menu_close"></div></div>
+			<div class="logo menu_logo">
+				<a href="#">
+					<div class="logo_container d-flex flex-row align-items-start justify-content-start">
+						<div class="logo_image"><div><img src="{% static 'images/logo.png' %}" alt=""></div></div>
+					</div>
+				</a>
+			</div>
+			<ul>
+				<li class="menu_item"><a href="/">Home</a></li>
+				<li class="menu_item"><a href="/about/">About us</a></li>
+				<li class="menu_item"><a href="/properties/">Properties</a></li>
+				<li class="menu_item"><a href="/posts/">Posts</a></li>
+				<li class="menu_item"><a href="/contact/">Contact</a></li>
+			</ul>
+		</div>
+		<a href="#"><div class="menu_phone btn btn-info"><span>Post Property</span></div></a>
+	</div>

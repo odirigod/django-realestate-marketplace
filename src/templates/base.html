@@ -1,0 +1,143 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{% block title %} Real Estate, Apartments - Buy, Sell or Rent Properties in Nigeria {% endblock title %} | Homelink.ng</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Homelink real estate marketplace">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="description" content="The leading real estate marketplace. Find the latest property for sale or for rent across Nigeria from trusted landlords and agents. Sell your property with us or find a new home easily and convenient from our wide range of flats, apartments, houses and more."></meta>
+<meta name="author" content="Homelink Nigeria, Ltd."/>
+<meta name="Copyright" content="Copyright (c) 2019 Homelink Nigeria."/>
+<!-- <meta name="msapplication-config" content="none"/> -->
+<meta name="ROBOTS" content="ALL"/>
+<meta name="ROBOTS" content="NOYDIR"/>
+<meta name="ROBOTS" content="NOODP"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/> -->
+<!-- <meta name="format-detection" content="telephone=no"/> -->
+<!-- <meta name="msapplication-TileColor" content="#3366b8"/> -->
+
+<!-- <link rel="canonical" href="http://www.homelink.ng/"></link> -->
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"></meta>
+<meta itemprop="name" content="Homelink Real Estate, Rentals and Sales"/>
+<meta itemprop="description" content="The most trafficked website about home sales and rentals, with real estate values for almost every Nigeria home. 1,000,000 listings that you won't find on anywhere."/>
+<link rel="start" title="Homelink home" href="/"/>
+<!--[if gte IE 9]><link rel="shortcut icon" href="/static/images/ie9_favicon.ico" type="image/x-icon"/><![endif]-->
+{% block meta %}
+  <meta name="referrer" content="always"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="http://www.homelink.ng"/>
+  <meta property="og:site_name" content="Homelink"/>
+  <meta property="og:title" content="Homelink: Real Estate, Apartments - Buy, Sell or Rent Properties in Nigeria"/>
+  <meta property="og:description" content="The leading real estate marketplace. Find the latest property for sale or for rent across Nigeria from trusted landlords and agents. Sell your property with us or find a new home easily and convenient from our wide range of flats, apartments, houses and more."/>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@homelinkng">
+  <meta name="twitter:title" content="Homelink: Real Estate - Buy, Sell or Rent Properties in Nigeria">
+  <meta name="twitter:description" content="The leading real estate marketplace. Find the latest property for sale or for rent across Nigeria from trusted landlords and agents.">
+  <meta name="twitter:image" content="http://www.homelink.ng/static/images/about_image.jpg">
+
+  <!-- <meta name="facebook:card" content="summary_large_image">
+  <meta name="facebook:site" content="@homelinkng">
+  <meta name="facebook:title" content="Homelink: Real Estate - Buy, Sell or Rent Properties in Nigeria">
+  <meta name="facebook:description" content="The leading real estate marketplace. Find the latest property for sale or for rent across Nigeria from trusted landlords and agents.">
+  <meta name="facebook:image" content="http://www.homelink.ng/static/images/about_image.jpg"> -->
+
+  <meta name="news_keywords" content="Real Estate, Property Listing, Apartments, Buy, Rent, Sale">
+{% endblock %}
+
+
+<link rel="shortcut icon" type="image/x-icon" href="{% static '/images/favicon.ico' %}">
+<!-- Custom for jquery UI -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+{% block extra_styles %}
+
+{% endblock extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/custom.css' %}">
+</head>
+<body>
+
+<div class="super_container">
+	
+	{% include 'navbar.html' %}
+	
+	<!-- Home -->
+	{% block content %}
+
+		<div class="home">
+
+			<!-- Home Slider -->
+			<div class="home_slider_container">
+				<div class="owl-carousel owl-theme home_slider">
+					
+					<!-- Slide -->
+					<div class="owl-item">
+						<div class="home_slider_background" style="background-image:url(/static/images/home_slider_1.jpg)"></div>
+						<div class="slide_container">
+							<div class="container">
+								<div class="row">
+									<div class="col">
+										<div class="slide_content">
+											<!-- <div class="home_subtitle">super offer</div> -->
+											<div class="home_title" style="text-align:center;">Find your dream home</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Home search -->
+		{% include 'search.html' %}
+
+	
+
+	{% endblock content %}
+
+	<!-- Newsletter -->	<!-- Footer -->
+	{% include 'footer.html' %}
+</div>
+
+
+{% block scripts %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+{% endblock scripts %}
+
+
+
+
+<script>        
+	$(document).ready(function(){
+	{% block jquery %}
+
+	{% endblock jquery %}
+	})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+
+
+{% block links %}
+<!-- Bootstrap Core CSS -->
+<link href="{% static 'dashboard/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Menu CSS -->
+<link href="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" rel="stylesheet">
+<!-- animation CSS -->
+<link href="{% static 'dashboard/css/animate.css' %}" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
+<!-- color CSS -->
+<link href="{% static 'dashboard/css/colors/blue-dark.css' %}" id="theme" rel="stylesheet">
+{% endblock links %}
+
+
+
+<!-- container-fluid -->
+{% block content %}
+<div class="container-fluid">
+    <div class="row bg-title">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Blank</h4> 
+        </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 hidden-xs"> 
+            <a href="#" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs waves-effect waves-light">Logout</a>
+            <ol class="breadcrumb">
+                <li><a href="#">Dashboard</a></li>
+                <li class="active">Blank</li>
+            </ol>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                <h3 class="box-title">Blank page</h3> 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+<!-- /.container-fluid -->
+    
+{% block scripts %}
+<!-- jQuery -->
+<script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<!-- Menu Plugin JavaScript -->
+<script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+<!--slimscroll JavaScript -->
+<script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'dashboard/js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}
+

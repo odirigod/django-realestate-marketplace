@@ -1,0 +1,97 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+<!-- Newsletter -->
+
+	<div class="newsletter">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/newsletter.jpg' %}" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="newsletter_content d-flex flex-lg-row flex-column align-items-start justify-content-start">
+						<div class="newsletter_title_container">
+							<div class="newsletter_title">Are you buying, selling or renting?</div>
+							<div class="newsletter_subtitle">Stay updated with the latest news &amp; deals.</div>
+						</div>
+						<div class="newsletter_form_container">
+							<form action="{% url 'newsletter' %}" method="POST" class="newsletter_form">{% csrf_token %}
+								<input type="email" name="email" class="newsletter_input" placeholder="Your e-mail address" required="required">
+								<button class="newsletter_button">subscribe now</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Footer -->
+	<footer class="footer">
+		<div class="footer_main">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="footer_logo"><a href="/"><img src="{% static 'images/hl-logo-w.png' %}" alt=""></a></div>
+					</div>
+					<div class="col-lg-9 d-flex flex-column align-items-start justify-content-end">
+						<div class="footer_title">Latest Properties</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-3 footer_col">
+						<div class="footer_about">
+							<div class="footer_about_text"><!-- Homelink.ng offers real estate agencies and realtors the technology they need to connect with today's real estate owners, prospective buyers and tenants. --></div>
+							<div class="footer_about_text">
+								<!-- <span class="text-bold">Follow us:</span><br> -->
+								<a href="http://www.facebook.com/homelinkng"><i class="fa fa-facebook fa-2x text-white"></i></a> &nbsp; 
+								<a href="http://www.twitter.com/homelinkng"><i class="fa fa-twitter fa-2x text-white"></i></a> &nbsp; 
+								<a href="http://www.instagram.com/homelinkng"><i class="fa fa-instagram fa-2x text-white"></i></a> &nbsp; 
+								<a href="http://www.linkedin.com/company/homelinkng"><i class="fa fa-linkedin fa-2x text-white"></i></a> &nbsp;
+							</div>
+						</div>
+					</div>
+					{% for instance in product_list|slice:":3" %}
+					<div class="col-lg-3 footer_col">
+						<div class="footer_latest d-flex flex-row align-items-start justify-content-start">
+							<div><div class="footer_latest_image"><a href="{{ instance.get_absolute_url }}">{% if instance.get_image_url %}<img src="{{ instance.get_image_url }}" alt="">{% else %}<img src="{% static 'images/no_image.png' %}" alt="">{% endif %}</a></div></div>
+							<div class="footer_latest_content">
+								<div class="footer_latest_location">{{ instance.state }}</div>
+								<div class="footer_latest_name"><a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></div>
+								<div class="footer_latest_price">&#8358; {{ instance.price|floatformat|intcomma }}</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="footer_bar">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="footer_bar_content d-flex flex-row align-items-center justify-content-start">
+							<div class="cr">
+								&copy; <script>document.write(new Date().getFullYear());</script> Homelink.ng <!-- - All rights reserved --> 
+								<!-- <br> Design by <a href="http://nakasoftng.com" target="_blank">Nakasoft</a> -->
+							</div>
+							<div class="footer_nav">
+								<ul>
+									<li><a href="/">Home</a></li>
+									<li><a href="/about/">About us</a></li>
+									<!-- <li><a href="/properties/">Properties</a></li> -->
+									<li><a href="/posts/">News</a></li>
+									<li><a href="/contact/">Contact us</a></li>
+									<li><a href="/advert/">Advert</a></li>
+									<li><a href="/careers/">Careers</a></li>
+									<li><a href="/terms/">Terms</a></li>
+									<li><a href="/privacy/">Privacy</a></li>
+								</ul>
+							</div>
+							<!-- <div class="footer_phone ml-auto"><span>call us: </span>652 345 3222 11</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>

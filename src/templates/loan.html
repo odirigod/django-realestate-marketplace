@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Home Loan</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Bluesky template project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about_responsive.css' %}">
+{% endblock extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/custom.css' %}">
+</head>
+<body>
+
+<div class="super_container">
+
+	
+	
+	<!-- Home -->
+	{% block content %}
+	
+	<!-- Home -->
+
+	<div class="home">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/banner2.jpg' %}" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content d-flex flex-row align-items-end justify-content-start">
+							<div class="home_title">Privacy Policy</div>
+							<div class="breadcrumbs ml-auto">
+								<ul>
+									<li><a href="/">Home</a></li>
+									<li>Home Loan</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Home Search -->
+	{% include 'search.html' %}
+
+	<!-- About -->
+
+	<div class="about">
+		<div class="container">
+			<div class="row">
+
+				<!-- About Content -->
+				<div class="col-md-8 col-md-offset-2">
+					<div class="about_content">
+						<div class="section_title">Home Loan</div>
+						<!-- <div class="section_subtitle">Let us guide you home</div> --><br>
+						<div class="">
+							<!-- <p> A home loan is a loan taken for buying or constructing a home or to make improvements to a residential property. You can get a loan from from banks and registered housing finance companies.
+
+								Your home loan is secured against the property that you buy. This means that in case you are unable to repay the loan, the lending bank will have the right to take possession of your home.
+								Q1. What are the types of Home loans available?
+
+								Ans.: The following different kinds of home loans are available:
+
+								    Home Purchase Loan
+								    A common type of loan taken for purchasing a home.
+								    Home Improvement Loan
+								    A loan given for implementing repair works and renovations at home.
+								    Home Construction Loan
+								    A loan available for the construction of a new home.
+								    Home Extension Loan
+								    Home extension loans are given for expanding or extending an existing home. For example, addition of an extra room, etc.
+								    Land Purchase Loan
+								    This type of loan is sanctioned for purchase of a land, for both home construction or investment purposes.
+								    Balance Transfer Loan
+								    This loans help you pay off an existing home loan with a higher interest rate, and avail of a loan with a lower rate of interest.
+								    Refinance Loan
+								    This loan helps you pay off the debt you may have incurred from private sources such as relatives and friends in order to purchase your present home.
+								    Loans for NRIs
+								    This loan is tailored to suit the requirements of NRIs who wish to build or buy a home in India.
+
+								Q2. What is an EMI?
+
+								Ans.: EMI (Equated Monthly Installment) is the amount payable to the lending institution every month, till the loan is paid back in full. It consists of a portion of the interest as well as the principal.
+								Q3. What are the eligibility conditions for a home loan?
+
+								Ans.: To qualify for a home loan, most of the lending institutions in India require you to be:
+
+								    An Indian resident or NRI
+								    Above 24 years of age at the commencement of the loan
+								    Below 60 or retirement age when the loan matures
+								    Either self employed or salaried
+
+								Q4. What are the interest rates offered for home loans? What are: Daily Reducing, Monthly Reducing and Yearly Reducing?
+
+								Ans.: Interest rates are different from institution to institution and generally range from about 8.75% to around 12 %. The interest on home loans in India is usually calculated either on monthly reducing or yearly reducing balance. In some cases, daily reducing basis is also adopted.
+
+								    Annual reducing:
+								    In this system, the principal, for which you pay interest, reduces at the end of the year. Thus you continue to pay interest on a certain portion of the principal which you have actually paid back to the lender. This means the EMI for the monthly reducing system is effectively less than the annual reducing system.
+								    Monthly reducing:
+								    In this system, the principal, for which you pay interest, reduces every month as you pay your EMI.
+								    Daily Reducing:
+								    In this system, the principal, for which you pay interest, reduces from the day you pay your EMI. EMI in the daily reducing system is less than the monthly reducing system.
+
+								Q5. What is a fixed rate of interest?
+
+								Ans.: Some institutions have a fixed rate of interest, which means the rate of interest remains unchanged for the entire duration of the loan. This means you do not benefit, even if rates of interest drop in the market.
+								Q6. What is a floating rate?
+
+								Ans.: This is the rate of interest that fluctuates according to the market lending rate. This means you stand the risk of paying more than you budgeted for in case the lending rate goes up
+								Q7. What are the other costs that usually accompany a home loan?
+
+								Ans.: Home loans are usually accompanied by the following extra costs:
+
+								    Processing Charge:
+								    A fee payable to the lender on applying for a loan. It is either a fixed amount not linked to the loan or may also be a percentage of the loan amount. The loan amount required cannot be less than the processing fee.
+								    Pre-payment Penalties:
+								    When a loan is paid back before the end of the agreed duration, a penalty is charged by some banks/companies, which is usually 2% of the amount being paid.
+								    Miscellaneous Costs:
+								    Some lenders may levy documentation or consultant charges.
+
+								Q8. How do HFCs decide on the loan amount?
+
+								Ans.: Usually, most companies give up to a maximum of 85% of the cost of the house. The 15%, sometimes called 'seed money', will have to be provided by the loan applicant. The amount, for which the applicant is eligible, is determined by the age, income, no. of dependents, monthly outgoing and repayment capacity. This varies from case to case.
+								Q9. Are securities required for home loans?
+
+								Ans.: In most cases, the property to be purchased itself becomes the security and is mortgaged to the lending institution till the entire loan is repaid. Some institutions may ask for additional security such as life insurance policies, FD receipts and share or savings certificates.
+								Q10. What is the time required for loan disbursement?
+
+								Ans.: On an average, loans are disbursed within 3-15 days after satisfactory and complete documentation and completion of all relevant procedures, including proof that 15% of the cost has been paid upfront to the seller of the property.
+								Q11. What are the tax benefits of home loans?
+
+								Ans.: Both principal as well as interest of home loans attract tax benefits. With effect from 1st April 2005 (i.e. assessment year 2005-07) under section 80C of the Income Tax Act 1965:
+
+								Principal amount of repayment of loan along with other savings such as PF, PPF, Life Insurance premium etc up to a maximum of Rs 1, 00,000/- will be eligible for deduction from gross income.
+
+								Interest paid up to a maximum of Rs 1, 50,000/- will be eligible for deduction from gross income on loan after completion of construction will be deductible from income from property.
+
+
+								</p> -->
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	{% endblock content %}	
+
+	<!-- Newsletter --> 
+	<!-- Footer -->
+	{% include 'footer.html' %}
+</div>
+{% block scripts %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/about.js' %}"></script>
+{% endblock scripts %}
+</body>
+</html>

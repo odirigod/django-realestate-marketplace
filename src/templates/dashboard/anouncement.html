@@ -1,0 +1,93 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+
+
+    {% block content %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                     <h2>Notification!!!</h2>                                   
+                    </div>
+                </div>       
+                <hr /> <br>  
+
+            <!-- START THE PANEL -->
+                  
+                 <!--  <div class="page-header text-primary text-center">
+                    <h2>Anouncement </h2>
+                  </div> -->
+
+                  <!-- /. ROW  -->
+            
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title"><b>Getting Started</b></h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>Homelink.ng offers real estate agencies and realtors the technology they need to connect with today's real estate owners, prospective buyers and tenants and internet surfers.</p>
+                            <p>
+                                If you require any help at anytime with your account, please feel free to contact the Support Team at <a>support@homelink.ng</a> or <a>0809&nbsp;446&nbsp;6080</a>
+                            </p>
+                            <p>Thank you for trusting in Homelink.ng</p>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title"><b>Account Verification</b></h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>To get Verified, scan and send the following documents to <a>support@homelink.ng</a></p>
+                            <p>
+                                - Certified of Incorporation/Business Name<br>
+                                - Utility bill with the address on your account on Homelink <small>(not more than 3 months old)</small>
+                            </p>
+                            <p><br></p>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title"><b>Who get Verified</b></h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>Verified helps increase trust and safety in our community. Properly seekers can feel more confident doing business with Verified agents, who are more likely to be legitimate and trustworthy.</p>
+                            <p>All properly listing &amp; your property page will have a Verified badge.</p>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+
+    {% endblock content %}
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="{% static 'dashb/js/jquery-1.10.2.js' %}"></script>
+      <!-- BOOTSTRAP SCRIPTS -->
+    <script src="{% static 'dashb/js/bootstrap.min.js' %}"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="{% static 'dashb/js/jquery.metisMenu.js' %}"></script>
+     <!-- MORRIS CHART SCRIPTS -->
+     <script src="{% static 'dashb/js/morris/raphael-2.1.0.min.js' %}"></script>
+    <script src="{% static 'dashb/js/morris/morris.js' %}"></script>
+      <!-- CUSTOM SCRIPTS -->
+    <script src="{% static 'dashb/js/custom.js' %}"></script>
+    
+   
+</body>
+</html>

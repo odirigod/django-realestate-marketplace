@@ -1,0 +1,287 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+
+    {% block links %}
+        <!-- Bootstrap Core CSS -->
+        <link href="{% static 'dashboard/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Menu CSS -->
+        <link href="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" rel="stylesheet">
+        <!-- toast CSS -->
+        <link href="{% static 'dashboard/plugins/bower_components/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
+        <!-- morris CSS -->
+        <link href="{% static 'dashboard/plugins/bower_components/morrisjs/morris.css' %}" rel="stylesheet">
+        <!-- animation CSS -->
+        <link href="{% static 'dashboard/css/animate.css' %}" rel="stylesheet">
+        <!-- style CSS -->
+        <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
+        <!-- concept CSS -->
+        <!-- <link href="{% static 'dashboard/css/concept.css' %}" rel="stylesheet">
+        <link href="{% static 'dashboard/css/concept-font.css' %}" rel="stylesheet"> -->
+        <!-- custom CSS -->        
+        <link href="{% static 'dashboard/css/custom.css' %}" rel="stylesheet">
+        <!-- color CSS -->
+        <link href="{% static 'dashboard/css/colors/green-dark.css' %}" id="theme" rel="stylesheet">  
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    {% endblock links %}
+
+
+    <!-- container-fluid -->
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Dashboard</h4> 
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 hidden-xs"> 
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li>Dashboard</li>
+                        <li class="active">Home</li>
+                    </ol>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+           <!--  {% if request.user.profile.phone %} 
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h3 class="page-title">Welcome back, {{ request.user.get_full_name }}</h3>
+                    <p>Current Plan: <span style="font-weight: bolder;">{{ request.user.profile.subscription.plan }}</span> <br><a href="{% url 'dashboard:subscription' %}" class="btn btn-success btn-sm">Upgrade</a></p>
+                    <p>Expires On: <span style="font-weight: bolder;">{{ request.user.profile.subscription.end_date }}</span> <br><a href="{% url 'dashboard:subscription' %}" class="btn btn-success btn-sm">Extend</a></p>
+                  </div>
+              </div>
+            </div>
+
+            {% else %} 
+                {% include 'dashboard/profile_update_prompt_2.html' %}
+            {% endif %} -->
+
+            {% if request.user.profile.subscription.end_date < today %} 
+                {% include 'dashboard/subscription_expired.html' %}
+            {% endif %}
+
+
+            <div class="row white-box">
+                <div class="col-sm-4">
+                {% if request.user.profile.phone %} 
+                    <ul class="price-list">
+                        <li class="header bg-info">Account Information</li>
+                          <li>Name: <span style="font-weight: bolder;">{{ request.user.get_full_name }}</span></li>
+                          <li>Member Since: <span style="font-weight: bolder;">{{ request.user.date_joined|date }}</span></li>
+                          <li>Current Plan: <span style="font-weight: bolder;">{{ request.user.profile.subscription.plan }}</span> <a href="{% url 'dashboard:subscription' %}" class="btn btn-info btn-sm btn-rounded btn-outline">Upgrade</a></li>
+                          <li>Expires On: <span style="font-weight: bolder;">{{ request.user.profile.subscription.end_date|date }}</span> <a href="{% url 'dashboard:subscription' %}" class="btn btn-info btn-sm btn-rounded btn-outline">Extend</a></li>
+                    </ul>
+                {% else %} 
+                    {% include 'dashboard/profile_update_prompt.html' %}
+                {% endif %}
+                </div>
+                <!-- <div class="col-sm-4">
+                  <ul class="price-list">
+                    <li class="header bg-warning">Getting Started</li>
+                      <p>Homelink.ng offers real estate agencies and realtors the technology they need to connect with today's real estate owners, prospective buyers and tenants and internet surfers.</p>
+                      <p>If you require any help at anytime with your account, please feel free to contact the Support Team at <a>support@homelink.ng</a> or <a>0809&nbsp;446&nbsp;6080</a></p>
+                      <p>Thank you for trusting in Homelink.ng</p>
+                  </ul>
+                </div> -->
+                <div class="col-sm-4">
+                  <ul class="price-list">
+                    <li class="header bg-warning">Account Verification</li>
+                        <p>To get Verified, scan and send the following documents to <a>support@homelink.ng</a></p>
+                        <p>
+                            - Certified of Incorporation/Business Name<br>
+                            - Utility bill with the address on your account on Homelink <small>(not more than 3 months old)</small>
+                        </p>
+                  </ul>
+                </div>
+                <div class="col-sm-4">
+                  <ul class="price-list">
+                    <li class="header bg-warning">Who get Verified</li>
+                        <p>Verified helps increase trust and safety in our community. Properly seekers can feel more confident doing business with Verified agents, who are more likely to be legitimate and trustworthy.</p>
+                        <p>All properly listing &amp; your property page will have a Verified badge.</p>
+                  </ul>
+                </div>
+            </div> 
+
+
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-4">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:product_create' %}">
+                    <li class="lead">Post a Property</li>
+                    <li><p><i class="fa fa-upload fa-3x"></i></p> <p> Post as many properties as you want</p></li>
+                    </a>
+                  </ul>
+                </div>
+                <div class="col-md-4">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:product_list' %}">
+                    <li class="lead">My Listing</li>
+                    <li><p><i class="fa fa-building fa-3x"></i></p> <p> Boost, Feature, and Edit your listings</p></li>
+                    </a>
+                  </ul>
+                </div>
+                <div class="col-md-4">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:profile_update' %}">
+                    <li class="lead">My Profile</li>
+                    <li><p><i class="fa fa-user fa-3x"></i></p> <p> View and Edit your profile information</p></li>
+                    </a>
+                  </ul>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-4">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:subscription' %}">
+                    <li class="lead">My Subscription</li>
+                    <li><p><i class="fa fa-credit-card fa-3x"></i></p> <p> Subscribe, Upgrade, Renew and Top-up your products</p></li>
+                    </a>
+                  </ul>
+                </div>
+                <div class="col-md-4">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:client_request_list' %}">
+                    <li class="lead">Client Request</li>
+                    <li><p><i class="fa fa-users fa-3x"></i></p> <p> View contacts and get free leads</p></li>
+                    </a>
+                  </ul>
+                </div>                
+                <div class="col-md-4">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:my_message_list' %}">
+                    <li class="lead">My Messages</li>
+                    <li><p><i class="fa fa-envelope fa-3x"></i></p> <p> Get immediate promo, news and inbox messages</p></li>
+                    </a>
+                  </ul>
+                </div>
+            </div>
+            <!-- /.row -->
+            
+
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Do you need help? Contact Us.</h4>
+                    <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                    <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                  </div>
+              </div>
+            </div>
+
+
+            <!-- row -->
+            <!-- <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="white-box">
+                        <h3 class="box-title">My messages</h3>
+                        <div class="message-center">
+                            <a href="#">
+                                <div class="user-img"> <img src="../plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                <div class="mail-contnet">
+                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
+                            </a>
+                            <a href="#">
+                                <div class="user-img"> <img src="../plugins/images/users/sonu.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                <div class="mail-contnet">
+                                    <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                            </a>
+                            <a href="#">
+                                <div class="user-img"> <img src="../plugins/images/users/arijit.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                <div class="mail-contnet">
+                                    <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
+                            </a>
+                            <a href="#">
+                                <div class="user-img"> <img src="../plugins/images/users/genu.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                <div class="mail-contnet">
+                                    <h5>Genelia Deshmukh</h5> <span class="mail-desc">I love to do acting and dancing</span> <span class="time">9:08 AM</span> </div>
+                            </a>
+                            <a href="#" class="b-none">
+                                <div class="user-img"> <img src="../plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                <div class="mail-contnet">
+                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 col-sm-12">
+                    <div class="white-box">
+                        <h3 class="box-title">Anouncements / Notifications</h3>
+                        <div class="comment-center">
+                            <div class="comment-body">
+                                <div class="user-img"> <img src="../plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"></div>
+                                <div class="mail-contnet">
+                                    <h5>Pavan kumar</h5> <span class="mail-desc">Donec ac condimentum massa. Etiam pellentesque pretium lacus. Phasellus ultricies dictum suscipit. Aenean commodo dui pellentesque molestie feugiat.</span><a href="javacript:void(0)" class="action"><i class="ti-close text-danger"></i></a> <a href="javacript:void(0)" class="action"><i class="ti-check text-success"></i></a><span class="time pull-right">April 14, 2016</span></div>
+                            </div>
+                            <div class="comment-body">
+                                <div class="user-img"> <img src="../plugins/images/users/sonu.jpg" alt="user" class="img-circle"> </div>
+                                <div class="mail-contnet">
+                                    <h5>Sonu Nigam</h5> <span class="mail-desc">Donec ac condimentum massa. Etiam pellentesque pretium lacus. Phasellus ultricies dictum suscipit. Aenean commodo dui pellentesque molestie feugiat.</span><a href="javacript:void(0)" class="action"><i class="ti-close text-danger"></i></a> <a href="javacript:void(0)" class="action"><i class="ti-check text-success"></i></a><span class="time pull-right">April 14, 2016</span></div>
+                            </div>
+                            <div class="comment-body b-none">
+                                <div class="user-img"> <img src="../plugins/images/users/arijit.jpg" alt="user" class="img-circle"> </div>
+                                <div class="mail-contnet">
+                                    <h5>Arijit Sinh</h5> <span class="mail-desc">Donec ac condimentum massa. Etiam pellentesque pretium lacus. Phasellus ultricies dictum suscipit. Aenean commodo dui pellentesque molestie feugiat. </span><a href="javacript:void(0)" class="action"><i class="ti-close text-danger"></i></a> <a href="javacript:void(0)" class="action"><i class="ti-check text-success"></i></a><span class="time pull-right">April 14, 2016</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- /.row -->
+        </div>
+    {% endblock content %}
+    <!-- /.container-fluid -->
+
+
+    {% block scripts %}
+        <!-- jQuery -->
+        <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <!-- Menu Plugin JavaScript -->
+        <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+        <!--slimscroll JavaScript -->
+        <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+        <!--Wave Effects -->
+        <script src="{% static 'dashboard/js/waves.js' %}"></script>
+        <!--Counter js -->
+        <script src="{% static 'dashboard/plugins/bower_components/waypoints/lib/jquery.waypoints.js' %}"></script>
+        <script src="{% static 'dashboard/plugins/bower_components/counterup/jquery.counterup.min.js' %}"></script>
+        <!--Morris JavaScript -->
+        <script src="{% static 'dashboard/plugins/bower_components/raphael/raphael-min.js' %}"></script>
+        <script src="{% static 'dashboard/plugins/bower_components/morrisjs/morris.js' %}"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+        <script src="{% static 'dashboard/js/dashboard1.js' %}"></script>
+        <script src="{% static 'dashboard/plugins/bower_components/toast-master/js/jquery.toast.js' %}"></script>
+
+        <!-- <script type="text/javascript">
+        $(document).ready(function() {
+            $.toast({
+                heading: 'Welcome to Homelink dashboard',
+                text: 'Connecting the world of real-estate.',
+                position: 'top-right',
+                loaderBg: '#ff6849',
+                icon: 'info',
+                hideAfter: 3500,
+                stack: 6
+            })
+        });
+        </script> -->
+    {% endblock scripts %}
+

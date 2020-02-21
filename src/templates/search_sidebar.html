@@ -1,0 +1,131 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+<div class="sidebar_search">
+	<div class="sidebar_search_title">Search for properties</div>
+	<div class="sidebar_search_form_container">
+		<form action="{% url 'products:product_list' %}" method="GET" class="sidebar_search_form" id="sidebar_search_form">
+			<input class="sidebar_search_input" type="text" placeholder="Search Keywords . . ." name="q" value="{{ request.GET.q }}"><br/><br/>
+			<select class="sidebar_search_select" name="state">
+				<option disabled selected>- Select State -</option>
+				<option {% if request.GET.state == 'Abia' %} selected {% endif %} value="Abia">Abia</option>
+				<option {% if request.GET.state == 'Abuja' %} selected {% endif %} value="Abuja">Abuja</option>
+				<option {% if request.GET.state == 'Adamawa' %} selected {% endif %} value="Adamawa">Adamawa</option>
+				<option {% if request.GET.state == 'Akwa Ibom' %} selected {% endif %} value="Akwa Ibom">Akwa Ibom</option>
+				<option {% if request.GET.state == 'Anambra' %} selected {% endif %} value="Anambra">Anambra</option>
+				<option {% if request.GET.state == 'Bauchi' %} selected {% endif %} value="Bauchi">Bauchi</option>
+				<option {% if request.GET.state == 'Bayelsa' %} selected {% endif %} value="Bayelsa">Bayelsa</option>
+				<option {% if request.GET.state == 'Benue' %} selected {% endif %} value="Benue">Benue</option>
+				<option {% if request.GET.state == 'Borno' %} selected {% endif %} value="Borno">Borno</option>
+				<option {% if request.GET.state == 'Cross River' %} selected {% endif %} value="Cross River">Cross River</option>
+				<option {% if request.GET.state == 'Delta' %} selected {% endif %} value="Delta">Delta</option>
+				<option {% if request.GET.state == 'Ebonyi' %} selected {% endif %} value="Ebonyi">Ebonyi</option>
+				<option {% if request.GET.state == 'Edo' %} selected {% endif %} value="Edo">Edo</option>
+				<option {% if request.GET.state == 'Ekiti' %} selected {% endif %} value="Ekiti">Ekiti</option>
+				<option {% if request.GET.state == 'Enugu' %} selected {% endif %} value="Enugu">Enugu</option>
+				<option {% if request.GET.state == 'Gombe' %} selected {% endif %} value="Gombe">Gombe</option>
+				<option {% if request.GET.state == 'Imo' %} selected {% endif %} value="Imo">Imo</option>
+				<option {% if request.GET.state == 'Jigawa' %} selected {% endif %} value="Jigawa">Jigawa</option>
+				<option {% if request.GET.state == 'Kaduna' %} selected {% endif %} value="Kaduna">Kaduna</option>
+				<option {% if request.GET.state == 'Kano' %} selected {% endif %} value="Kano">Kano</option>
+				<option {% if request.GET.state == 'Kastina' %} selected {% endif %} value="Kastina">Kastina</option>
+				<option {% if request.GET.state == 'Kebbi' %} selected {% endif %} value="Kebbi">Kebbi</option>
+				<option {% if request.GET.state == 'Kogi' %} selected {% endif %} value="Kogi">Kogi</option>
+				<option {% if request.GET.state == 'Kwara' %} selected {% endif %} value="Kwara">Kwara</option>
+				<option {% if request.GET.state == 'Lagos' %} selected {% endif %} value="Lagos">Lagos</option>
+				<option {% if request.GET.state == 'Nasarawa' %} selected {% endif %} value="Nasarawa">Nasarawa</option>
+				<option {% if request.GET.state == 'Niger' %} selected {% endif %} value="Niger">Niger</option>
+				<option {% if request.GET.state == 'Ogun' %} selected {% endif %} value="Ogun">Ogun</option>
+				<option {% if request.GET.state == 'Ondo' %} selected {% endif %} value="Ondo">Ondo</option>
+				<option {% if request.GET.state == 'Osun' %} selected {% endif %} value="Osun">Osun</option>
+				<option {% if request.GET.state == 'Oyo' %} selected {% endif %} value="Oyo">Oyo</option>
+				<option {% if request.GET.state == 'Plateau' %} selected {% endif %} value="Plateau">Plateau</option>
+				<option {% if request.GET.state == 'Rivers' %} selected {% endif %} value="Rivers">Rivers</option>
+				<option {% if request.GET.state == 'Sokoto' %} selected {% endif %} value="Sokoto">Sokoto</option>
+				<option {% if request.GET.state == 'Taraba' %} selected {% endif %} value="Taraba">Taraba</option>
+				<option {% if request.GET.state == 'Yobe' %} selected {% endif %} value="Yobe">Yobe</option>
+				<option {% if request.GET.state == 'Zamfara' %} selected {% endif %} value="Zamfara">Zamfara</option>
+			</select>
+			<select class="sidebar_search_select" name="category">
+					<option disabled selected>- Category -</option>
+	              	<option {% if request.GET.category == 'For Sale' %} selected {% endif %} value="For Sale">For Sale</option>
+	              	<option {% if request.GET.category == 'For Rent' %} selected {% endif %} value="For Rent">For Rent</option  >
+	              	<option {% if request.GET.category == 'For ShortLet' %} selected {% endif %} value="For ShortLet">For ShortLet</option>
+			</select>
+			<select class="sidebar_search_select" name="property_type">
+				<option>- Property Type -</option>
+					<!-- <option {% if request.GET.property_type == 'Apartment' %} selected {% endif %} value="Apartment">Apartment/Flat</option> -->
+					<!-- <option {% if request.GET.property_type == 'Bungalow' %} selected {% endif %} value="Bungalow">Bungalow</option> -->
+					<!-- <option {% if request.GET.property_type == 'Duplex' %} selected {% endif %} value="Duplex">Duplex</option> -->
+					<!-- <option {% if request.GET.property_type == 'Self Contained' %} selected {% endif %} value="Self Contained">Self Contained</option> -->
+					<option {% if request.GET.property_type == 'Residential' %} selected {% endif %} value="Land">Residential</option>
+					<option {% if request.GET.property_type == 'Commercial' %} selected {% endif %} value="Commercial">Commercial</option>
+					<option {% if request.GET.property_type == 'Land' %} selected {% endif %} value="Land">Land</option>
+			</select>
+			<div class="row sidebar_search_row">
+				<div class="col-lg-6">
+					<select class="sidebar_search_select" name="bedrooms">
+						<option disabled selected>- Bedrooms -</option>
+						<option {% if request.GET.bedrooms == '1' %} selected {% endif %} value="1"> 1 </option>
+						<option {% if request.GET.bedrooms == '2' %} selected {% endif %} value="2"> 2 </option>
+						<option {% if request.GET.bedrooms == '3' %} selected {% endif %} value="3"> 3 </option>
+						<option {% if request.GET.bedrooms == '4' %} selected {% endif %} value="4"> 4 </option>
+						<option {% if request.GET.bedrooms == '5' %} selected {% endif %} value="5"> 5 </option>
+						<option {% if request.GET.bedrooms == '6' %} selected {% endif %} value="6"> 6+ </option>
+					</select>
+				</div>
+				<div class="col-lg-6">
+					<select class="sidebar_search_select" name="bathrooms">
+						<option disabled selected>- Bathrooms -</option>
+						<option {% if request.GET.bedrooms == '1' %} selected {% endif %} value="1"> 1 </option>
+						<option {% if request.GET.bedrooms == '2' %} selected {% endif %} value="2"> 2 </option>
+						<option {% if request.GET.bedrooms == '3' %} selected {% endif %} value="3"> 3 </option>
+						<option {% if request.GET.bedrooms == '4' %} selected {% endif %} value="4"> 4 </option>
+						<option {% if request.GET.bedrooms == '5' %} selected {% endif %} value="5"> 5 </option>
+						<option {% if request.GET.bedrooms == '6' %} selected {% endif %} value="6"> 6+ </option>
+					</select>
+				</div>
+			</div>
+			<div class="row sidebar_search_row">
+				<div class="col-lg-6">
+					<select class="sidebar_search_select" name="min_price">
+						<option disabled selected>- Min Price -</option>
+						<option {% if request.GET.max_price == '100000' %} selected {% endif %} value="100000">&#8358; 100,000</option>
+						<option {% if request.GET.max_price == '200000' %} selected {% endif %} value="200000">&#8358; 200,000</option>
+						<option {% if request.GET.max_price == '500000' %} selected {% endif %} value="500000">&#8358; 500,000</option>
+						<option {% if request.GET.max_price == '1000000' %} selected {% endif %} value="1000000">&#8358; 1 million</option>
+						<option {% if request.GET.max_price == '2000000' %} selected {% endif %} value="2000000">&#8358; 2 million</option>
+						<option {% if request.GET.max_price == '5000000' %} selected {% endif %} value="5000000">&#8358; 5 million</option>
+						<option {% if request.GET.max_price == '10000000' %} selected {% endif %} value="10000000">&#8358; 10 million</option>
+						<option {% if request.GET.max_price == '50000000' %} selected {% endif %} value="50000000">&#8358; 50 million</option>
+						<option {% if request.GET.max_price == '100000000' %} selected {% endif %} value="100000000">&#8358; 100 million</option>
+						<option {% if request.GET.max_price == '500000000' %} selected {% endif %} value="500000000">&#8358; 500 million</option>
+						<option {% if request.GET.max_price == '1000000000' %} selected {% endif %} value="1000000000">&#8358; 1 billion</option>
+						<option {% if request.GET.max_price == '50000000000' %} selected {% endif %} value="1000000000">&#8358; 50 billion</option>
+						<option {% if request.GET.max_price == '100000000000' %} selected {% endif %} value="1000000000">&#8358; 100 billion</option>
+					</select>
+				</div>
+				<div class="col-lg-6">
+					<select class="sidebar_search_select" name="max_price">
+						<option disabled selected>- Max Price -</option>
+						<option {% if request.GET.max_price == '100000' %} selected {% endif %} value="100000">&#8358; 100,000</option>
+						<option {% if request.GET.max_price == '200000' %} selected {% endif %} value="200000">&#8358; 200,000</option>
+						<option {% if request.GET.max_price == '500000' %} selected {% endif %} value="500000">&#8358; 500,000</option>
+						<option {% if request.GET.max_price == '1000000' %} selected {% endif %} value="1000000">&#8358; 1 million</option>
+						<option {% if request.GET.max_price == '2000000' %} selected {% endif %} value="2000000">&#8358; 2 million</option>
+						<option {% if request.GET.max_price == '5000000' %} selected {% endif %} value="5000000">&#8358; 5 million</option>
+						<option {% if request.GET.max_price == '10000000' %} selected {% endif %} value="10000000">&#8358; 10 million</option>
+						<option {% if request.GET.max_price == '50000000' %} selected {% endif %} value="50000000">&#8358; 50 million</option>
+						<option {% if request.GET.max_price == '100000000' %} selected {% endif %} value="100000000">&#8358; 100 million</option>
+						<option {% if request.GET.max_price == '500000000' %} selected {% endif %} value="500000000">&#8358; 500 million</option>
+						<option {% if request.GET.max_price == '1000000000' %} selected {% endif %} value="1000000000">&#8358; 1 billion</option>
+						<option {% if request.GET.max_price == '50000000000' %} selected {% endif %} value="1000000000">&#8358; 50 billion</option>
+						<option {% if request.GET.max_price == '100000000000' %} selected {% endif %} value="1000000000">&#8358; 100 billion</option>
+					</select>
+				</div>
+			</div>
+			<button class="sidebar_search_button search_form_button">search</button>
+		</form>
+	</div>
+</div>

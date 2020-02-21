@@ -1,0 +1,143 @@
+{% extends 'posts/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+					
+
+<title>{% block title %} {{ instance.title }} {% endblock %}</title>
+
+{% block meta %} 
+<meta name="description" itemprop="description" content="The Official Homelink Blog – Read about the latest updates and news in real estate development, property marketing, housing, homes for sale, for rent, real estate and property advice." />
+
+<meta name="keywords" itemprop="keywords" content="Homelink News, Homelink Official Blog, Real Estate, Property Listing, Apartments, Buy, Rent, Sale, Updates, News" />
+<link rel='next' href='http://www.homelink.ng/posts/?page=2' />
+
+<link rel="canonical" href="http://www.homelink.ng/posts/" />
+<meta name="referrer" content="always"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://www.homelink.ng{{ request.path }}"/>
+<meta property="og:site_name" content="Homelink"/>
+<meta property="og:title" content="{{ instance.title }}"/>
+<meta property="og:description" content="{{ instance.content|truncatewords:20 }}"/>
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@homelinkng">
+<meta name="twitter:title" content="{{ instance.title }}">
+<meta name="twitter:description" content="{{ instance.content|truncatewords:20 }}">
+<meta name="twitter:image" content="http://www.homelink.ng{{ instance.image.url }}">
+<meta name="news_keywords" content="Real Estate, Property Listing, Apartments, Buy, Rent, Sale">
+
+<!-- <meta name="facebook:card" content="summary_large_image">
+<meta name="facebook:site" content="@homelinkng">
+<meta name="facebook:title" content="{{ instance.title }}">
+<meta name="facebook:description" content="{{ instance.content|truncatewords:20 }}">
+<meta name="facebook:image" content="http://www.homelink.ng{{ instance.image.url }}"> -->
+{% endblock %}
+
+
+
+
+{% block post %}
+<div class="news_posts">
+	<!-- News Post -->
+	<div class="news_post">
+		<div class="news_post_image">
+			{% if instance.image %}<img src="{{ instance.image.url }}" class="img-responsive" alt="">{% else %}<img src="{% static 'images/news_1.jpg' %}" alt="">{% endif %}
+		</div><br>
+		<div class="news_post_title_container d-flex flex-row align-items-center justify-content-start">			
+			<div>            
+				<div class="news_post_date_container d-flex flex-column align-items-center justify-content-center">
+					<div class="news_post_day">{{ instance.publish|date:"d" }}</div>
+					<div class="news_post_month">{{ instance.publish|date:"M 'y" }}</div>
+				</div>
+			</div>
+			<div class="news_post_title_content">
+				<div class="news_post_title"><a href="#">{{ title }}</a></div>
+				<div class="news_post_info">
+					<ul>
+						<li>By <a href="{% url 'posts:list' %}?u={{ instance.user.username }}">{{ instance.user.get_full_name }}</a></li>
+						<li>in <a href="{% url 'posts:category' slug=instance.category.slug %}">{{ instance.category }}</a></li>
+						<li><a href="#">{{ instance.comments.count }} Comment{{ instance.comments|pluralize }}</a></li>
+						<li class="text-danger">{% if instance.draft %}<span>Staff only: Draft</span>{% endif %} {% if instance.publish > today %}<span>Staff Only: Future Post</span>{% endif %}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="news_post_text">
+			<p>{{ instance.get_markdown }}</p>
+		</div>
+	</div>
+
+
+	<div id="comments">
+        <h5 class="text-uppercase"><u>{{ comments.count }} comment{{ comments|pluralize }}</u></h4>
+        
+        {% for comment in comments %}
+        <div class="row comment">
+            <div class="col-sm-2 col-md-1 text-center-xs">
+                <p>
+                    <img src="{% static 'images/avatar.png' %}" class="img-responsive img-circle" alt="" style="max-height: 40px; max-width: 40px;">
+                </p>
+            </div>
+            <div class="col-sm-10 col-md-11">
+                <h5 class="text-uppercase">{{ comment.fullname }}</h5>
+                <p class="posted"><i class="fa fa-clock-o"></i><span class="text-muted"> {{ comment.timestamp|timesince }} ago</span><br>
+                <i class="fa fa-quote-left fa-pull-left fa-border"></i>{{ comment.content }}</p>
+                <!-- <p class="reply"> {% if comment.children.count > 0 %}{{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} | {% endif %} <a class='comment-reply-btn' href="#"><i class="fa fa-reply"></i> Reply</a>
+                </p> -->
+            </div>
+        </div><hr>
+        <!-- /.comment -->
+        {% endfor %}
+
+        <div id="comment-form">
+            <h5 class="text-uppercase"><u>Leave comment</u></h5>
+            <form method="POST" action="."> {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="fullname">Name <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" value='{{ fullname }}' >
+                            <span style="color: red;">{{ comment_form.fullname.errors }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="email">Email <small class="text-muted">(will not be published)</small> <span class="required">*</span></label>                            
+                            <input type="email" class="form-control" id="email" name="email" value='{{ email }}' >
+                            <span style="color: red;">{{ comment_form.email.errors }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <label for="comment">Comment <span class="required">*</span>
+                            </label>
+                            <textarea class="form-control" id="comment" rows="4" name="content">{{ content }}</textarea>
+                            <span style="color: red;">{{ comment_form.content.errors }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="content_type" value='{{ instance.get_content_type }}' >
+                <input type="hidden" name="object_id" value='{{ instance.id }}' >
+
+                <div class="row">
+                    <div class="col-sm-8 text-right">
+                        <button type="submit" class="sidebar_search_button search_form_button" style="margin-top: 0px; float: left;"><i class="fa fa-comment-o"></i> Post comment</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!-- /#comment-form -->
+
+  	</div>
+
+
+</div>
+{% endblock post %}

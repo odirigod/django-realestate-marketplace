@@ -1,0 +1,172 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Saved Properties</h4> </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li class="active">Properties</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- row -->      
+            <div class="row">      
+            {% for i in object_list %}
+                <div class="col-md-4">
+                    <ul class="white-box price-list">
+                        <a href="{{ i.product.get_absolute_url }}">
+                            {% if i.product.get_image_url %}
+                            <img src="{{ i.product.get_image_url }}" class="img-responsive img-thumbnai" alt="">
+                            {% else %}
+                            <img src="{% static 'images/no_image.png' %}" class="img-responsive" alt="">
+                            {% endif %}
+                        </a>
+                        <li>
+                            <span class="lead"><a href="{{ i.product.get_absolute_url }}">{{ i.product.title }}</a></span><br>
+                            <span>{{ i.product.address }}, {{ i.product.city }}, {{ i.product.state }}</span><br>
+                            <span>PID: {{ i.product.pid }}</span> 
+                        </li>
+                        <li>
+                            <span>{{ i.product.category }} ({{ i.product.property_type }})</span><br>
+                            <span>Saved on: {{ i.timestamp }}</span><br>
+                            <span class="lead">&#8358; {{ i.product.price|floatformat|intcomma }}</span><br>
+                        </li>
+                        <li>
+                            <a href="{{ i.product.get_absolute_url }}" class="btn-sm btn-primary"><i class="fa fa-eye"></i> View Details</a>
+                            <a href="{% url 'dashboard:wishlist_delete' pk=i.id %}" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Remove</a>
+                        </li>
+                    </ul>
+                </div>
+            {% cycle '' '' '<div class="clearfix"></div>' %}
+            {% empty %}
+                <br><br><br>
+                <li class="lead text-center">No property yet.</li>
+                <br><br><br>
+            {% endfor %}
+            </div>            
+            <!-- /row -->
+
+
+            {% if object_list %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <div class="pagination">
+                          <ul class="pagination">
+                            {% if object_list.has_previous %}
+                              <!-- <li><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                              <li><a href="?page={{ object_list.previous_page_number }}"> << Previous </a></li>
+                            {% else %}
+                              <!-- <li class="disabled"><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                              <li class="disabled"><a href="#"> << Previous </a></li>            
+                            {% endif %}
+
+                              <li><a> Page {{ object_list.number }} of {{ object_list.paginator.num_pages }} </a></li>
+
+                            {% if object_list.has_next %}
+                              <li><a href="?page={{ object_list.next_page_number }}"> Next >> </a></li>
+                              <!-- <li><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                            {% else %}            
+                              <li class="disabled"><a href="#"> Next >> </a></li>
+                              <!-- <li class="disabled"><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                            {% endif %}
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Do you need help? Contact Us.</h4>
+                    <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                    <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                  </div>
+              </div>
+            </div>
+            <!-- /row -->
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}
+
+
+
+{% block extra_scripts %}
+    <!-- custom jquery -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.product.min.js"></script>
+    <!-- using jQuery -->
+    <script type="text/javascript" src="{% static '/js/django.csrf.js' %}"></script>
+   
+
+{% endblock extra_scripts %}
+
+
+ <!-- Adding item to wishlist -->
+    <!-- <script>        
+        $(document).ready(function(){
+            $(".wishlist-btn").click(function(event){
+                event.preventDefault()
+                var obj_id = $(this).val()
+                var request = $.ajax({
+                    method: "POST",
+                    url: "{% url 'products:ajax_wishlist' %}",
+                    data: {
+                        product_id: obj_id,         
+                    }
+                })
+                request.done(function(data){
+                    // console.log("working...")
+                    if (data.success){
+                        alert("Item added to wishlist successfully!.")
+                    }
+                })
+                request.fail(function(jqXHR, textStatus){
+                    if (jqXHR.status == 404) {
+                        alert("Page not found!")
+                    } else if (jqXHR.status == 401){
+                        alert("You must be logged in to do this.")
+                    } else {
+                        alert("There was an error with your request. Please try again.")
+                    }
+                })
+            })
+
+        })
+    </script> -->

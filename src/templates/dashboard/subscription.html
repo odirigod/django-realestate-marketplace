@@ -1,0 +1,322 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Subscription</h4> </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li class="active">Subscription</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box">
+                    <p class="lead"><small>Name: <span style="font-weight: bolder;">{{ request.user.get_full_name }}</span></small></p>
+                    <p class="lead"><small>Current Plan: <span style="font-weight: bolder;">{{ request.user.profile.subscription.plan }}</span> <!-- <br><a href="{% url 'dashboard:subscription' %}" class="btn btn-success btn-sm">Upgrade</a> --></small></p>
+                    <p class="lead"><small>Expires On: <span style="font-weight: bolder;">{{ request.user.profile.subscription.end_date }}</span> <!-- <br><a href="{% url 'dashboard:subscription' %}" class="btn btn-success btn-sm">Extend</a> --></small></p>
+                  </div>
+              </div>
+            </div>
+            <!-- /row -->
+
+            
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center" style="font-weight: bolder;">
+                    <h1 class="page-title">Subscription Plans</h1>
+                    <p>Pay for 1 month or as many months as you want.</p>
+                    <p>We do NOT have restrictions on the minimum number of months you can pay for on Homelink.</p>
+                    <p>However, payments for 6 months and above attract discounts.</p>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header">Basic</li>
+                    <li> <p><span class="price">&#8358; 3,000</span><br>per month </p>
+                      <p>&#8358; 16,500 for 6 months <br>&#8358; 30,000 for 1 year </p></li>
+                    <li><i class="fa fa-check text-success"></i> Unlimited Listing</li>
+                    <li><i class="fa fa-check text-success"></i> Client Request</li>
+                    <li><i class="fa fa-times text-danger"></i> Property Boost</li>
+                    <li><i class="fa fa-times text-danger"></i> Featured Ad</li>
+                    <li><i class="fa fa-times text-danger"></i> Social Networking</li>
+                    <li><i class="fa fa-times text-danger"></i> Custom Website</li>                     
+                    <li>
+                      <!-- <br>
+                      <select class="form-group form-control">
+                        <option class=""> - - Select - - </option>
+                        <option class="">1 month at &#8358; 3,000</option>
+                        <option class="">3 months at &#8358; 9,000</option>
+                        <option class="">6 months at &#8358; 16,500</option>
+                        <option class="">12 months at &#8358; 30,000</option>
+                      </select> -->
+                      <a href="#payment" class="btn btn-rounded btn-default">Proceed to Payment</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-success">Standard</li>
+                    <li> <p><span class="price">&#8358; 5,000</span><br>per month </p><p>&#8358; 27,500 for 6 months <br>&#8358; 50,000 for 1 year </p></li>
+                    <li><i class="fa fa-check text-success"></i> Unlimited Listing</li>
+                    <li><i class="fa fa-check text-success"></i> Client Request</li>
+                    <li><i class="fa fa-check text-success"></i> Property Boost</li>
+                    <li><i class="fa fa-times text-danger"></i> Featured Ad</li>
+                    <li><i class="fa fa-times text-danger"></i> Social Networking</li>
+                    <li><i class="fa fa-times text-danger"></i> Custom Website</li>
+                    <li>
+                      <!-- <br>
+                      <select class="form-control form-group">
+                        <option> - - Select - - </option>
+                        <option class="">1 month at &#8358; 5,000</option>
+                        <option class="">3 months at &#8358; 14,500</option>
+                        <option class="">6 months at &#8358; 27,500</option>
+                        <option class="">12 months at &#8358; 50,000</option>
+                      </select> -->
+                      <a href="#payment" class="btn btn-rounded btn-success">Proceed to Payment</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-danger">Pro</li>
+                    <li> <p><span class="price">&#8358; 10,000</span><br>per month </p><p>&#8358; 55,000 for 6 months <br>&#8358; 100,000 for 1 year </p></li>
+                    <li><i class="fa fa-check text-success"></i> Unlimited Listing</li>
+                    <li><i class="fa fa-check text-success"></i> Client Request</li>
+                    <li><i class="fa fa-check text-success"></i> Property Boost</li>
+                    <li><i class="fa fa-check text-success"></i> Featured Ad</li>
+                    <li><i class="fa fa-times text-danger"></i> Social Networking</li>
+                    <li><i class="fa fa-times text-danger"></i> Custom Website</li>
+                    <li class=""><a href="#payment" class="btn btn-rounded btn-danger">Proceed to Payment</a></li>
+                  </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-primary">Premium</li>
+                    <li> <p><span class="price">&#8358; 20,000</span><br>per month </p><p>&#8358; 110,000 for 6 months <br>&#8358; 200,000 for 1 year </p></li>
+                    <li><i class="fa fa-check text-success"></i> Unlimited Listing</li>
+                    <li><i class="fa fa-check text-success"></i> Client Request</li>
+                    <li><i class="fa fa-check text-success"></i> Property Boost</li>
+                    <li><i class="fa fa-check text-success"></i> Featured Ad</li>
+                    <li><i class="fa fa-check text-success"></i> Social Networking</li>
+                    <li><i class="fa fa-check text-success"></i> Custom Website</li>
+                    <li class=""><a href="#payment" class="btn btn-rounded btn-primary">Proceed to Payment</a></li>
+                  </ul>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            
+            <!-- row -->
+            <!-- <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Want a custom plan? Contact us for price.</h4>
+                  </div>
+              </div>
+            </div> -->
+            
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Want a custom plan? or Have questions about our subscription plans?</h4>
+                    <h4 class="page-title">Please Contact us.</h4>
+                    <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                    <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                  </div>
+              </div>
+            </div>
+
+
+
+
+           <div class="row">
+                <div class="col-md-12">
+                    <div class="white-box">
+
+                        <div class="white-box text-center">
+                            <h1 class="">FAQ</h1>
+                        </div>
+                        
+                        <button class="accordion panel-title">1. Do you offer a free trial?</button>
+                        <div class="panel">
+                          <p>Yes. We offer 30 days free with up to three (3) property listing on our Basic plan. Plus, if you pay for any plan within the free trial period weʼll add the remaining trial days to your new subscription for free!</p>
+                        </div>
+
+                        <button class="accordion panel-title">2. Are there any limits on the trial?</button>
+                        <div class="panel">
+                          <p>The trial is equivalent to our Basic plan, but you can only have up to five active listing in a trial. Any additional listing you create will not be able to get activated until the subscription plan is paid for.</p>
+                        </div>
+
+                        <button class="accordion panel-title">3. Do I need to sign a long-term contract?</button>
+                        <div class="panel">
+                          <p>No, you can cancel your account at any time and there will be no further payments required. Please note: we do not offer refunds for unused subscriptions, so please use your free trial to make sure HomeLink is right for you.</p>
+                        </div>
+
+                        <button class="accordion panel-title">4. What if my needs change later?</button>
+                        <div class="panel">
+                          <p>You can upgrade or downgrade your plan at any time; the new plan instantly comes into effect. A pro-rata credit for the remaining time of your previous plan will be deducted from the cost of your new plan.</p>
+                        </div>
+
+                        <button class="accordion panel-title">5. What types of payment do you accept?</button>
+                        <div class="panel">
+                          <p>We currently accept cash, cheques, bank transfers. While online payment for acceptance of Credit or Debit cards with Visa, Verve & MasterCard is inview.</p>
+                        </div>
+
+                        <button class="accordion panel-title">6. What other limits are there?</button>
+                        <div class="panel">
+                          <p>All of our account limits – including those for listing features – are based on your subscription plan, and are listing under each plan.</p>
+                        </div>
+
+                        <div class="white-box text-center">
+                            <h4 class="page-title">Have more questions? Please contact us.</h4>
+                            <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                            <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+           <div class="row">
+                <div class="col-md-12 col-md-offset-0 col-xs-12">
+                    <div class="white-box text-center" id="payment">
+                        <h2 class="page-title">MAKING PAYMENT</h2>
+                        <h4>You can make payment using any of the below methods</h4>
+                    </div>
+                </div>
+            </div>
+
+
+
+              <div class="row">
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-success">Paying Online with Card</li>
+                    <li>The online payment method is currently not available.</li>
+                      <!-- <li>Click the "Pay Online" button above and then select "Upgrade" or "Renew".</li>
+                      <li>Select the subscription plan you want to pay for and duration (if available).</li>
+                      <li>Select the "Pay Online" payment method and then click "Pay Now".</li>
+                      <li>Follow the remaining steps.</li> -->
+                  </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-success">Paying Via Bank Transfer</li>
+                      <li>Select a price plan and the number of months you wish to pay for.</li>
+                      <li>Enter your Homelink Username or Email as a remark for the transfer using the account details below.</li>
+                      <li>Follow the remaining steps.</li>
+                  </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-success">Paying Via Cash Deposit</li>
+                      <li>Select a price plan and the number of months you wish to pay for.</li>
+                      <li>Pay the amount at any Zenith Bank branch using the account details below.</li>
+                      <li>Write your Homelink Username or Email on the deposit slip.</li>
+                      <li>Scan or take a picture of the deposit slip and mail to <a>support@homelink.ng</a> </li>
+                  </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <ul class="price-list white-box">
+                    <li class="header bg-success">Paying Via Cheque</li>
+                      <li>Select a price plan and the number of months you wish to pay for.</li>
+                      <li>Pay the cheque at any Zenith Bank branch using the account details below.</li>
+                      <li>Write your Homelink Username or Email on the deposit slip.</li>
+                      <li>Scan or take a picture of the deposit slip and mail to <a>support@homelink.ng</a> </li>
+                  </ul>
+                </div>
+            </div>
+
+            <!-- <hr> -->
+            <!-- /. ROW  -->
+            <div class="row white-box">
+                <div class="col-md-4 col-md-offset-4">
+                  <ul class="price-list white-box">
+                    <li class="header bg-primary">ACCOUNT DETAILS</li>
+                    <li>All bank transfer, cash and cheque payments should be made to the account details below.</li>
+                    <li><b>Bank:</b> Zenith Bank Plc.</li>
+                    <li><b>Account Number:</b> 1014305165</li>
+                    <li><b>Account Name:</b> Nakasoft Ltd</li>
+                    <li>After payment, please scan or take a picture of the deposit slip and mail to <a>support@homelink.ng</a> for activation.</li>
+                  </ul>
+                </div>
+            </div> 
+            <!-- /.row --><br>
+            
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Do you need help? Contact Us.</h4>
+                    <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                    <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                  </div>
+              </div>
+            </div>
+            <!-- /row -->
+
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}
+
+
+{% block extra_scripts %}
+    <script type="text/javascript">        
+        // $(document).ready(function() {
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active_1");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight){
+                  panel.style.maxHeight = null;
+                } else {
+                  panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+              });
+            }
+        // });
+    </script> 
+{% endblock extra_scripts %}

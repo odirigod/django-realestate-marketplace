@@ -1,0 +1,264 @@
+
+.cr a {
+    color: #888;
+}
+
+.cr a:hover {
+    color: #00C269;
+}
+
+.icon_box_title a {
+    color: #252525;
+}
+.icon_box_title a:hover {
+    color: #00C269;
+}
+
+.header{
+    background: #00C269 !important;
+    border-image: #00C269 !important; /*linear-gradient(to right, #487fee, #32fa95);*/
+}
+
+.header.scrolled{
+    background: #00c269de !important; 
+}
+
+.menu{
+    background: #00C269 !important; /*linear-gradient(to right, #487fee, #32fa95);*/
+}
+
+.menu_item a:hover {
+    color: #DDDDDD;
+}
+
+.menu_close_container:hover .menu_close,
+.menu_close_container:hover .menu_close::after
+{
+    background: #00C269 !important;
+}
+
+.hamburger i:hover {
+    color: #DDDDDD;
+}
+
+/* .logo
+{
+    width: 100px !important;
+} */
+
+.main_nav ul li.active a,
+.main_nav ul li a:hover
+{
+    color: #fff !important;
+    text-decoration: underline !important;
+}
+
+.phone_num
+{
+    background: #02a259 !important; /* #05aa5e #01884b; linear-gradient(to right, #487fee, #32fa95);*/
+}
+
+.phone_num_inner
+{
+    background: #00C269 !important;
+}
+
+.phone_num_inner a
+{
+    color: #FFFFFF !important;
+}
+/*.phone_num span {
+    margin-left: 0px;
+}*/
+.menu_phone a
+{
+    color: #FFFFFF !important;
+}
+
+.details_container {
+    width: 100%;
+    background: #f1f6f9;
+    margin-top: 39px;
+    padding: 20px;
+    font-size: 9px;
+}
+
+.form-control {
+    color: unset; /*#00C269;*/
+}
+
+
+element.style {
+}
+.sidebar_search_title {
+    background: linear-gradient(to right, #32fa95, #888);
+    /*background: #00C269 !important; */
+}
+
+.sidebar_search_button {
+    display: block;
+    height: 72px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.search_form_button
+{
+    background: #00C269 !important; 
+}
+
+.latest_post_author, .latest_post_author a {
+    margin-top: 0px; 
+    font-size: 11px;
+}
+
+.realtor_outer:hover .realtor_link
+{
+    background: #00C269 !important; /*linear-gradient(to right, #487fee, #32fa95);*/
+}
+
+.newsletter_button
+{
+    background: #00C269 !important; /*linear-gradient(to right, #487fee, #32fa95);*/
+}
+
+.button
+{
+    background: #00C269 !important; /*linear-gradient(to right, #487fee, #32fa95);*/
+}
+
+.intro_price_container {
+    background: linear-gradient(to right, #00C269, #888) /*#777777 !important;*/
+}
+
+
+.owl-carousel .owl-item {
+    /*position: relative;*/
+    /*min-height: 1px;*/
+    width: 100%;
+    height: 100%;
+    /*float: unset;*/
+   /* display: block;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;*/
+}
+
+@media only screen and (max-width: 991px)
+.home_search_container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    margin-top: 80px;
+    margin-bottom: 43px;
+    background: linear-gradient(to right, #00C269, #888);
+}
+
+.footer_main
+{
+    background: #00C269 !important;
+}
+
+.footer_latest_name a:hover
+{
+    color: #DDDDDD !important;
+    /* text-decoration: underline !important; */
+}
+
+.footer_latest_price {
+    color: #FFFFFF !important;
+}
+
+.footer_about_text {
+     font-size: 14px; 
+}
+
+
+.intro_tags {
+    margin-top: 28px;
+}
+.intro_tags ul li {
+    display: inline-block;
+    height: 20px;
+    background: #f1f6f9;
+    margin-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 11px;
+    line-height: 20px;
+    color: #838383;
+}
+.intro_tags ul li:not(:last-child) {
+    margin-right: 5px;
+}
+.intro_tags ul li:hover {
+    background: #f1f6f9; /*#00C269;*/
+}
+.intro_tags ul li:hover a {
+    color: unset; /*#FFFFFF;*/
+}
+
+
+.intro_tags ul button {
+    display: inline-block;
+    height: 30px;
+    margin-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 11px;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+
+.intro_tags ul button:hover {
+    display: inline-block;
+    height: 30px;
+    background: #868e96; /*#343a40;*/
+    margin-bottom: 5px;
+    padding-left: 13px;
+    padding-right: 11px;
+    line-height: 20px;
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+
+
+
+.footer_nav
+    {
+        display: inherit;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #2cd983 to #333 */
+
+
+/* #3f6fce to #00C269 */
+
+
+/* linear-gradient(to right, #487fee, #32fa95); */
+
+/* to */
+
+/* linear-gradient(to right, #00C269, #487fee); */
+
+/* linear-gradient(to right, #32fa95, #888); */
+
+
+

@@ -1,0 +1,144 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">My Properties</h4>                    
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li class="active">Properties</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+
+            <!-- row -->            
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="white-box">
+                        <a href="{% url 'dashboard:client_request_dashboard_create' %}" class="btn btn-success btn-rounded">Request a Property</a>
+                    </div>                    
+                </div>
+            </div>
+            <!-- /row -->
+
+
+            {% if request.user.profile.phone and request.user.profile.subscription.end_date >= today %}
+                <!-- row -->            
+                <div class="row">
+                    {% for i in object_list %}
+                    <div class="col-md-4">
+                      <ul class="price-list client-request white-box">
+                        <li><p>
+                                <b>Ref:</b> <a href="{{ i.get_absolute_url }}">{{ i.ref }}</a><br>
+                                <b>Category:</b> {{ i.category }}<br>
+                                <b>Number of bedrooms:</b> {{ i.bedroom }}<br>
+                                <b>State:</b> {{ i.state }}<br>
+                                <b>Locality:</b> {{ i.locality }}<br>
+                                <b>Maximum budget:</b> &#8358; {{ i.budget|floatformat|intcomma }}<br>
+                                <b>Requester type:</b> {{ i.i_am_an }}<br>
+                                <b>Request date:</b> {{ i.timestamp|date }}
+                            </p>
+                        </li>
+                        <li>
+                            <a href="{{ i.get_absolute_url }}" class="btn btn-info">Details</a>
+                            {% if i.user == request.user.profile %}
+                            <a href="{% url 'dashboard:client_request_update' slug=i.ref %}" class="btn btn-default">Edit</a> 
+                            <a href="{% url 'dashboard:client_request_delete' slug=i.ref %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </li>
+                      </ul>
+                    </div>
+                    {% cycle '' '' '<div class="clearfix"></div>' %}
+                    {% empty %}
+                        <li class="lead text-center">No request yet.</li>
+                    {% endfor %}
+                </div>
+
+                {% if object_list %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <div class="pagination">
+                              <ul class="pagination">
+                                {% if object_list.has_previous %}
+                                  <!-- <li><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                                  <li><a href="?page={{ object_list.previous_page_number }}"> << Previous </a></li>
+                                {% else %}
+                                  <!-- <li class="disabled"><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                                  <li class="disabled"><a href="#"> << Previous </a></li>            
+                                {% endif %}
+
+                                  <li><a> Page {{ object_list.number }} of {{ object_list.paginator.num_pages }} </a></li>
+
+                                {% if object_list.has_next %}
+                                  <li><a href="?page={{ object_list.next_page_number }}"> Next >> </a></li>
+                                  <!-- <li><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                                {% else %}            
+                                  <li class="disabled"><a href="#"> Next >> </a></li>
+                                  <!-- <li class="disabled"><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                                {% endif %}
+                              </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %} 
+                <!-- /row -->
+            {% endif %}
+                
+            {% if not request.user.profile.phone %} 
+                {% include 'dashboard/profile_update_prompt.html' %}
+            {% endif %}
+
+            {% if request.user.profile.subscription.end_date < today %} 
+                {% include 'dashboard/subscription_expired.html' %}
+            {% endif %}
+
+            
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Do you need help? Contact Us.</h4>
+                    <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                    <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                  </div>
+              </div>
+            </div>
+            <!-- /row -->
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}

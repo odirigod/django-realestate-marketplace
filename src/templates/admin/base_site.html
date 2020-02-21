@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | Homelink.ng Admin{% endblock %}
+{% block extrastyle %}
+<style type="text/css">/*#00B2FF*/
+#header {
+	background-color: #305d1d; 
+	color: #fff;
+}
+.module h2, .module caption, .inline-group h2 {
+    background: #305d1d;
+}
+#branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: #fff;
+}
+div.breadcrumbs {
+    background: #4da926;
+    color: #fff;
+}
+a:link, a:visited {
+    color: #305d1d;
+}
+a:hover {
+    color: #4da926;
+}
+.object-tools a:hover {
+	background-color: #305d1d;
+}
+
+.submit-row input[type=submit] {
+    background: #305d1d;
+}
+
+.submit-row input[type=submit]:hover {
+    background: #4da926;
+}
+
+#header a:link, #header a:visited {
+    color: #eee;
+}
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Homelink.ng Admin</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+ 

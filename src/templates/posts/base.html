@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>News and Updates</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Bluesky template project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/rangeslider.js-2.3.0/rangeslider.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/news.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/news_responsive.css' %}">
+{% endblock extra_styles %}
+
+
+	<!-- Home -->
+	{% block content %}
+
+	<div class="home">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/banner3.jpg' %}" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content d-flex flex-row align-items-end justify-content-start">
+							<div class="home_title">News</div>
+							<div class="breadcrumbs ml-auto">
+								<ul>
+									<li><a href="/">Home</a></li>
+									<li>News</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Home Search -->
+	{% include 'search.html' %}
+
+	<!-- News -->
+
+	<div class="news">
+		<div class="container">
+			<div class="row">
+
+				<!-- News Posts -->
+				<div class="col-lg-8">
+					{% block post %}
+					<div class="news_posts">
+
+						<!-- News Post -->
+						{% for obj in queryset %}
+						<div class="news_post">
+							<div class="news_post_title_container d-flex flex-row align-items-center justify-content-start">
+								
+								<div>            
+									<div class="news_post_date_container d-flex flex-column align-items-center justify-content-center">
+										<div class="news_post_day">{{ obj.publish|date:"d" }}</div>
+										<div class="news_post_month">{{ obj.publish|date:"M 'y" }}</div>
+									</div>
+								</div>
+								<div class="news_post_title_content">
+									<div class="news_post_title"><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></div>
+									<div class="news_post_info">
+										<ul>
+											<li>By <a href="{% url 'posts:list' %}?u={{ obj.user.username }}">{{ obj.user.get_full_name }}</a></li>
+											<li>in <a href="{% url 'posts:category' slug=obj.category.slug %}">{{ obj.category }}</a></li>
+											<li><a href="#">3 Comments</a></li>
+											<li class="text-danger">{% if obj.draft %}<span>Staff only: Draft</span>{% endif %} {% if obj.publish > today %}<span>Staff Only: Future Post</span>{% endif %}</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="news_post_image">{% if obj.image %}<img src="{{ obj.image.url }}" alt="">{% else %}<img src="{% static 'images/news_1.jpg' %}" alt="">{% endif %}</div>
+							<div class="news_post_text">
+								<p>{{ obj.content|truncatechars_html:220 }}</p>
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+
+					<!-- Pagination -->
+					<div class="pagination">
+						<ul>
+							{% if queryset.has_previous %}
+					        <li class="previous"><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&larr; Previous</a></li>
+					      	{% else %}
+					        <li class="previous disabled"><a>&larr; Previous</a></li>
+					      	{% endif %}
+					      	<li>|</li>
+					      	{% if queryset.has_next %}
+					        <li class="next"><a href="?{{ page_request_var }}={{ queryset.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next &rarr;</a></li>
+					      	{% else %}
+					        <li class="next disabled"><a>Next &rarr;</a></li>
+					      	{% endif %}
+						</ul>
+					</div>
+					{% endblock post %}
+				</div>
+
+				<!-- Sidebar -->
+				<div class="col-lg-4">
+					<div class="sidebar">
+
+						<!-- Search -->
+						<div class="sidebar_top_search">
+							<form action="{% url 'posts:list' %}" method="GET" class="sidebar_top_search_form">
+								<input class="sidebar_top_search_input" type="text" name='q' placeholder="Search posts" required="required" value='{{ request.GET.q }}'>
+								<button class="sidebar_top_search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
+							</form>
+						</div>
+
+						<!-- Categories -->
+						<div class="categories">
+							<div class="sidebar_title">Categories</div>
+							<div class="categories_list">
+								<ul>
+									{% for obj in categories %}
+									<li>
+										<a href="{{ obj.get_absolute_url }}" class="d-flex flex-row align-items-start justfy-content-start">
+											<div>{{ obj.title }}</div>
+											<div class="ml-auto">{{ obj.post_set.count }}</div>
+										</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+
+						<!-- Latest Posts -->
+						<div class="sidebar_latest">
+							<div class="sidebar_title">Latest Posts</div>
+							<div class="sidebar_latest_posts">
+								<!-- Recent Post -->
+								{% for obj in qs_list %}
+								<div class="latest_post d-flex flex-row align-items-start justify-content-start">
+									<div><div class="latest_post_image">{% if obj.image %}<img src="{{ obj.image.url }}" alt="">{% endif %}</div></div>
+									<div class="latest_post_content">
+										<div class="latest_post_date"><a href="#">{{ obj.publish }}</a> <small class="text-danger">{% if obj.draft %}Staff only: Draft{% endif %} {% if obj.publish > today %}Staff Only: Future Post{% endif %}</small></div>
+										<div class="latest_post_title"><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></div>
+										<div class="latest_post_author">By <a href="{% url 'posts:list' %}?u={{ obj.user.username }}">{{ obj.user.get_full_name }}</a></div>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+
+						<!-- Sidebar Search -->
+						{% include 'search_sidebar.html' %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock content %}
+
+	<!-- Newsletter -->
+	<!-- Footer -->
+	{% include 'footer.html' %}
+</div>
+{% block scripts %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/rangeslider.js-2.3.0/rangeslider.min.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/news.js' %}"></script>
+{% endblock scripts %}
+</body>
+</html>
+
+

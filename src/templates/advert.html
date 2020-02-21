@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Adertisement</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Bluesky template project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about_responsive.css' %}">
+{% endblock extra_styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/custom.css' %}">
+</head>
+<body>
+
+<div class="super_container">
+
+	
+	
+	<!-- Home -->
+	{% block content %}
+	
+	<!-- Home -->
+
+	<div class="home">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'images/banner2.jpg' %}" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content d-flex flex-row align-items-end justify-content-start">
+							<div class="home_title">Advertising</div>
+							<div class="breadcrumbs ml-auto">
+								<ul>
+									<li><a href="/">Home</a></li>
+									<li>Advertising</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Home Search -->
+	{% include 'search.html' %}
+
+	<!-- About -->
+
+	<div class="about">
+		<div class="container">
+			<div class="row">
+
+				<!-- About Content -->
+				<div class="col-lg-6">
+					<div class="about_content">
+						<div class="section_title">Advertise With Us</div>
+						<!-- <div class="section_subtitle">Let us guide you home</div> --><br>
+						<div class="">
+							<p>Homelink.ng is Nigeria's fastest growing real estate marketplace. <!-- #1 place for property, with over 1 million page visits every day.* --> We can help bring your campaigns to life by reaching the right audiences with some of the most innovative and creative advertising solutions across our multi-platform portfolio. To find everything you need to know about advertising with Homelink, please contact us.</p>
+					       
+					        <p>
+							  Call: <b>0906&nbsp;666&nbsp;1121</b> <br>
+							  Email: <b>sales@homelink.ng</b>
+							</p>
+
+							<p>If you have advertising enquiries, you can <a href="/contact/">submit a request</a> through our online form.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- About Image -->
+				<div class="col-lg-6"><br>
+					<div class="about_image"><img src="{% static 'images/about_image.jpg' %}" alt=""></div>
+				</div>
+			</div>
+			<hr>
+			<div class="row milestones_row">
+
+				<!-- Milestone -->
+				<div class="col-lg-3 milestone_col">
+					<div class="milestone d-flex flex-row align-items-center justify-content-start">
+						<div class="milestone_icon d-flex flex-column align-items-center justify-content-center"><img src="{% static 'images/milestones_1.png' %}" alt=""></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="651">0</div>
+							<div class="milestone_text">Properties Sold</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Milestone -->
+				<div class="col-lg-3 milestone_col">
+					<div class="milestone d-flex flex-row align-items-center justify-content-start">
+						<div class="milestone_icon d-flex flex-column align-items-center justify-content-center"><img src="{% static 'images/milestones_2.png' %}" alt=""></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="1256">0</div>
+							<div class="milestone_text">Happy Clients</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Milestone -->
+				<div class="col-lg-3 milestone_col">
+					<div class="milestone d-flex flex-row align-items-center justify-content-start">
+						<div class="milestone_icon d-flex flex-column align-items-center justify-content-center"><img src="{% static 'images/milestones_3.png' %}" alt=""></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="124">0</div>
+							<div class="milestone_text">Buildings Sold</div>
+						</div>
+						
+					</div>
+				</div>
+
+				<!-- Milestone -->
+				<div class="col-lg-3 milestone_col">
+					<div class="milestone d-flex flex-row align-items-center justify-content-start">
+						<div class="milestone_icon d-flex flex-column align-items-center justify-content-center"><img src="{% static 'images/milestones_4.png' %}" alt=""></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="5">0</div>
+							<div class="milestone_text">Awards Won</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	{% endblock content %}	
+
+	<!-- Newsletter --> 
+	<!-- Footer -->
+	{% include 'footer.html' %}
+</div>
+{% block scripts %}
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/about.js' %}"></script>
+{% endblock scripts %}
+</body>
+</html>

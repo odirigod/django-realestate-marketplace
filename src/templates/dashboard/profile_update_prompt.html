@@ -1,0 +1,13 @@
+
+
+<ul class="price-list">
+    <li class="header bg-danger">Profile not up to date</li>
+    <li class="text-bolder">Name: {{ request.user.get_full_name }}</li>
+    <li> 
+      <span style="font-weight: bolder;">Kindly update your profile to get started</span><br>
+      <a href="{% url 'dashboard:profile_update' %}" class="btn btn-danger">Update Profile</a>
+    </li> 
+    <li>
+      <span class="text-muted color-bottom-txt">For assistance talk to our Support Team.<br> <i class="fa fa-phone"></i> <a>0809 446 6080</a> &nbsp;&nbsp; <i class="fa fa-envelope-o"></i> <a>support@homelink.ng</a></span>
+    </li>
+</ul>

@@ -1,0 +1,113 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Property Request</h4> </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li class="active">Client Request</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+
+            <!-- row -->            
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="white-box">
+                        <a href="{% url 'dashboard:client_request_create' %}" class="btn btn-success btn-rounded">Request a Property</a>
+                    </div>                    
+                </div>
+            </div>
+            <!-- /row -->
+
+
+            <!-- .row -->
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <div class="white-box">
+                        <p class="text-danger text-center">Client Request Details</p><br><br>
+                        <ul class="price-list client-request">
+                            <li><p><b>Ref:</b> {{ object.ref }}<br>
+                                <b>Category:</b> {{ object.category }}<br>
+                                <b>Number of bedroom(s):</b> {{ object.bedroom }}<br>
+                                <b>State:</b> {{ object.state }}<br>
+                                <b>Locality:</b> {{ object.locality }}<br>
+                                <b>Maximum budget:</b> &#8358; {{ object.budget|floatformat|intcomma }}<br> 
+                                <b>Request date:</b> {{ object.timestamp|date }}<br>
+                                <b>Comment:</b><br> {{ object.get_markdown }}</p>
+                            </li>
+                            <li>
+                                <b>Name:</b> {{ object.name }}<br>
+                                <b>Email address:</b> {{ object.email }}<br>
+                                <b>Phone number:</b> {{ object.phone }}<br>
+                                {% if object.whatsapp %}<b>WhatsApp number:</b> {{ object.whatsapp }}<br>{% endif %}
+                                <b>Requester Type:</b> {{ object.i_am_an }}
+                            </li>
+                            <li>
+                                <a href="{% url 'dashboard:client_request_list' %}" class="btn btn-info">Return to Client Request</a>
+                                {% if object.user == request.user.profile %}
+                                <a href="{% url 'dashboard:client_request_update' slug=object.ref %}" class="btn btn-default">Edit</a> 
+                                <a href="{% url 'dashboard:client_request_delete' slug=object.ref %}" class="btn btn-danger">Delete</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-xs-12">
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:product_list' %}">
+                    <li class="lead">My Listing</li>
+                    <li><p><i class="fa fa-building fa-3x"></i></p> <p> Boost, Feature, and Edit your listings</p></li>
+                    </a>
+                  </ul>
+                  <ul class="price-list white-box">
+                    <a href="{% url 'dashboard:subscription' %}">
+                    <li class="lead">My Subscription</li>
+                    <li><p><i class="fa fa-credit-card fa-3x"></i></p> <p> Subscribe, Upgrade, Renew and Top-up your products</p></li>
+                    </a>
+                  </ul>
+                  <ul class="price-list white-box">
+                    <li class="lead">Do you need help?</li>
+                    <li><p><i class="fa fa-support fa-2x"></i></p> <p> Contact us using the details below. <br> <i class="fa fa-phone"></i> 0809 446 6080 <br><i class="fa fa-envelope-o"></i> support@homelink.ng</p></li>
+                  </ul>
+                </div>
+                
+            </div>
+            <!-- /.row -->
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}

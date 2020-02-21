@@ -1,0 +1,144 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">My Messages</h4> </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li class="active">My Messages</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->  
+
+
+                <!-- row -->
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Recent Messages</h3>
+                            <div class="message-center">
+                                {% for msg in object_list %}
+                                <a href="{{ msg.get_absolute_url }}">
+                                    <div class="user-img"> 
+                                        {% if msg.sender.image %}
+                                        <img src="{{ msg.sender.image.url }}" alt="user" class="img-circle">
+                                        {% else %}
+                                        <img src="{% static 'dashboard/plugins/images/users/avatar.png' %}" alt="user" class="img-circle">
+                                        {% endif %}
+                                        <span class="profile-status online pull-right"></span> 
+                                    </div>
+                                    <div class="mail-contnet">
+                                        <h5>{{ msg.sender.user.get_full_name }}</h5> <span class="mail-desc">{{ msg.subject }}</span> <span class="time">{{ msg.timestamp|date }}</span> </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+
+
+                            <!-- Pagination -->
+                            {% if object_list %}
+                            <div class="text-center">
+                                <div class="pagination">
+                                  <ul class="pagination">
+                                    {% if object_list.has_previous %}
+                                      <!-- <li><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                                      <li><a href="?page={{ object_list.previous_page_number }}"> << Previous </a></li>
+                                    {% else %}
+                                      <!-- <li class="disabled"><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                                      <li class="disabled"><a href="#"> << Previous </a></li>            
+                                    {% endif %}
+
+                                      <li><a> Page {{ object_list.number }} of {{ object_list.paginator.num_pages }} </a></li>
+
+                                    {% if object_list.has_next %}
+                                      <li><a href="?page={{ object_list.next_page_number }}"> Next >> </a></li>
+                                      <!-- <li><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                                    {% else %}            
+                                      <li class="disabled"><a href="#"> Next >> </a></li>
+                                      <!-- <li class="disabled"><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                                    {% endif %}
+                                  </ul>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <ul class="price-list white-box">
+                            <a href="{% url 'dashboard:product_list' %}">
+                            <li class="lead">My Listing</li>
+                            <li><p><i class="fa fa-building fa-3x"></i></p> <p> Boost, Feature, and Edit your listings</p></li>
+                            </a>
+                        </ul>
+                        <ul class="price-list white-box">
+                            <a href="{% url 'dashboard:subscription' %}">
+                            <li class="lead">My Subscription</li>
+                            <li><p><i class="fa fa-credit-card fa-3x"></i></p> <p> Subscribe, Upgrade, Renew and Top-up your products</p></li>
+                            </a>
+                        </ul>
+                        <ul class="price-list white-box">
+                            <li class="lead">Do you need help?</li>
+                            <li><p><i class="fa fa-support fa-2x"></i></p> <p> Contact us using the details below. <br> <i class="fa fa-phone"></i> +234 906 666 1121 <br><i class="fa fa-envelope-o"></i> support@homelink.ng</p></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}
+
+
+{% block extra_scripts %}
+    <script type="text/javascript">        
+        // $(document).ready(function() {
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active_1");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight){
+                  panel.style.maxHeight = null;
+                } else {
+                  panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+              });
+            }
+        // });
+    </script> 
+{% endblock extra_scripts %}

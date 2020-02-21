@@ -1,0 +1,19 @@
+
+<!-- row -->
+<div class="row">
+    <div class="col-md-12">
+      <div class="white-box text-center">
+        <!-- <h3 class="page-title">Welcome back, {{ request.user.get_full_name }}</h3> -->
+        <h3 class="page-title text-danger">Your Subscription Has Expired!</h3>
+        <!-- <p>Member Since: <i>{{ request.user.date_joined|date }}</i></p> -->
+        <p> <span style="font-weight: bolder;">Kindly renew to continue using this service.</span></p> 
+        <p><a href="{% url 'dashboard:subscription' %}" class="btn btn-danger">Renew Now</a></p>
+        <hr />
+        <p>
+            <span class="text-muted color-bottom-txt">For assistance talk to our Support Team.<br> <i class="fa fa-phone"></i> <a>0809 446 6080</a> &nbsp;&nbsp; <i class="fa fa-envelope-o"></i> <a>support@homelink.ng</a> 
+            </span>
+        </p>
+      </div>
+  </div>
+</div>
+<!-- /row -->

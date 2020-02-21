@@ -1,0 +1,381 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+
+{% block extra_styles %}
+    <!-- Custom for jquery UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock extra_styles %}
+
+
+<script>        
+$(document).ready(function(){
+{% block jquery %}
+    $(".boosted-btn").click(function(event){
+        event.preventDefault()
+        var obj_pid = $(this).val()
+        $("#dialog-confirm-boosted").fadeIn("300")
+        $("#dialog-confirm-boosted").dialog({
+            resizable: false,
+            height: 180,
+            width: 350,
+            modal: true,
+            buttons: {
+                1: {
+                    id: "close",
+                    text: "Confirm",
+                    click: function(){
+                        console.log("confirm")
+                        $(this).dialog("close") 
+                        
+                        var request = $.ajax({
+                            method: "POST",
+                            url: "{% url 'dashboard:ajax_product_boosted' %}",
+                            data: {
+                                product_pid: obj_pid,         
+                            }
+                        })
+                        request.done(function(data){
+                            // console.log("working...")
+                            if (data.success){
+                                alert("This property is now Boosted.")
+                            }
+                        })
+                        request.fail(function(jqXHR, textStatus){
+                            if (jqXHR.status == 404) {
+                                alert("Page not found!")
+                            } else if (jqXHR.status == 401){
+                                alert("You must be logged in to do this.")
+                            } else if (jqXHR.status == 403){
+                                alert("Action forbidden.")
+                            } else if (jqXHR.status == 422){
+                                alert("Property already Boosted.")
+                            } else if (jqXHR.status == 424){
+                                alert("You currently have an active Boosted Property.")
+                            } else {
+                                alert("There was an error with your request. Please try again.")
+                            }
+                        })
+
+                    }, 
+                    class: "confirm-btn"    
+                },
+                2: {
+                    id: "close",
+                    text: "Cancel",
+                    click: function(){
+                        $(this).dialog("close")   
+                    }, 
+                    class: "cancel-btn"   
+                }
+            }
+        })
+
+    })
+
+
+
+    $(".featured-btn").click(function(event){
+        event.preventDefault()
+        var obj_pid = $(this).val()
+        $("#dialog-confirm-featured").fadeIn("300")
+        $("#dialog-confirm-featured").dialog({
+            resizable: false,
+            height: 200,
+            width: 350,
+            modal: true,
+            buttons: {
+                1: {
+                    id: "close",
+                    text: "Confirm",
+                    click: function(){
+                        console.log("confirm")
+                        $(this).dialog("close") 
+                        
+                        var request = $.ajax({
+                            method: "POST",
+                            url: "{% url 'dashboard:ajax_product_featured' %}",
+                            data: {
+                                product_pid: obj_pid,         
+                            }
+                        })
+                        request.done(function(data){
+                            // console.log("working...")
+                            if (data.success){
+                                alert("This property is now Featured.")
+                            }
+                        })
+                        request.fail(function(jqXHR, textStatus){
+                            if (jqXHR.status == 404) {
+                                alert("Page not found!")
+                            } else if (jqXHR.status == 401){
+                                alert("You must be logged in to do this.")
+                            } else if (jqXHR.status == 403){
+                                alert("Action forbidden.")
+                            } else if (jqXHR.status == 422){
+                                alert("Property already Featured.")
+                            } else if (jqXHR.status == 424){
+                                alert("You currently have an active Feature Ad.")
+                            } else {
+                                alert("There was an error with your request. Please try again.")
+                            }
+                        })
+
+                    }, 
+                    class: "confirm-btn"    
+                },
+                2: {
+                    id: "close",
+                    text: "Cancel",
+                    click: function(){
+                        $(this).dialog("close")   
+                    }, 
+                    class: "cancel-btn"   
+                }
+            }
+        })
+
+    })
+
+
+
+    $(".available-btn").click(function(event){
+        event.preventDefault()
+        var obj_pid = $(this).val()
+        $("#dialog-confirm-available").fadeIn("300")
+        $("#dialog-confirm-available").dialog({
+            resizable: false,
+            height: 200,
+            width: 350,
+            modal: true,
+            buttons: {
+                1: {
+                    id: "close",
+                    text: "Confirm",
+                    click: function(){
+                        console.log("confirm")
+                        $(this).dialog("close") 
+                        
+                        var request = $.ajax({
+                            method: "POST",
+                            url: "{% url 'dashboard:ajax_product_available' %}",
+                            data: {
+                                product_pid: obj_pid,         
+                            }
+                        })
+                        request.done(function(data){
+                            if (data.success){
+                                alert("Availability status changed successfully.")
+                                // if (data.available){
+                                //     $("#avail-status").html("Mark Rented")
+                                // } else {
+                                //     $("#avail-status").html("Mark Available")
+                                // }
+                            window.location.reload(); 
+
+                            }
+                        })
+                        request.fail(function(jqXHR, textStatus){
+                            if (jqXHR.status == 404) {
+                                alert("Page not found!")
+                            } else if (jqXHR.status == 401){
+                                alert("You must be logged in to do this.")
+                            } else if (jqXHR.status == 403){
+                                alert("Action forbidden.")
+                            } else {
+                                alert("There was an error with your request. Please try again.")
+                            }
+                        })
+
+                    }, 
+                    class: "confirm-btn"    
+                },
+                2: {
+                    id: "close",
+                    text: "Cancel",
+                    click: function(){
+                        $(this).dialog("close")   
+                    }, 
+                    class: "cancel-btn"   
+                }
+            }
+        })
+
+    })
+{% endblock jquery %}
+})
+</script>
+
+
+
+
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        {% block content %}
+        <div class="container-fluid">
+            <div class="row bg-title">
+                {% include 'messages_display.html' %}
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">My Properties</h4> 
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <a href="/accounts/logout/" class="btn btn-danger btn-sm hidden-xs pull-right m-l-20 btn-rounded btn-outline waves-effect waves-light">Logout</a>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                        <li class="active">Properties</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- row -->            
+                <div class="row">
+            {% for i in object_list %}
+                    <div class="col-lg-4 col-md-4">
+                        <ul class="white-box price-list">
+                            <a href="{{ i.get_absolute_url }}">
+                                {% if i.get_image_url %}
+                                <img src="{{ i.get_image_url }}" class="img-responsive img-thumbnai" alt="">
+                                {% else %}
+                                <img src="{% static 'images/no_image.png' %}" class="img-responsive" alt="">
+                                {% endif %}
+                            </a>
+                            <li>
+                                <span class="lead"><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></span><br>
+                                <span>{{ i.address }}, {{ i.city }}, {{ i.state }}</span><br>
+                                <span>PID: {{ i.pid }}</span> - <span class="" style="font-weight: bolder;"> {% if i.active and i.available %}<span class="text-success">Active</span>{% elif i.active and not i.available %}<span class="text-primary">{% if i.category == 'For Sale' %} Sold {% else %} Rented {% endif %}</span> {% else %}<span class="text-danger">Waiting Approval</span>{% endif %}</span>
+                            </li>
+                            <li>
+                                <span>{{ i.category }} ({{ i.property_type }})</span><br>
+                                <span>Posted on: {{ i.timestamp }}</span><br>
+                                <span class="lead">&#8358; {{ i.price|floatformat|intcomma }}</span><br>
+                            </li>
+                            <li>
+                                <span>
+                                    <button class="btn btn-sm btn-default boosted-btn" value="{{ i.pid }}"><i class="fa fa-arrow-up"></i> Boost Property</button>
+                                    <div id='dialog-confirm-boosted' title='Confirm Property Boost' style='display: none;'>
+                                        <p>Confirm you want to Boost this property.</p>
+                                    </div> 
+                                </span>
+                                <span>
+                                    <button class="btn btn-sm btn-default featured-btn" value="{{ i.pid }}" ><i class="fa fa-microphone"></i> Feature Ad</button> 
+                                    <div id='dialog-confirm-featured' title='Confirm Feature Ad' style='display: none;'>
+                                        <p>Confirm you want to Feature this property.</p>
+                                    </div>
+                                </span>
+                                <span>
+                                    <button class="btn btn-sm btn-default available-btn" value="{{ i.pid }}" ><i class="fa fa-check"></i>
+                                        <span id="avail-status">
+                                            {% if i.available %} 
+                                                {% if i.category == 'For Sale' %} Mark Sold {% else %} Mark Rented {% endif %} 
+                                            {% else %}  
+                                                Mark Available                                     
+                                                <!-- <span class="text-danger">{% if i.category == 'For Sale' %} Sold {% else %} Rented {% endif %}</span> -->
+                                            {% endif %}
+                                        </span>
+                                    </button>
+                                    <div id='dialog-confirm-available' title='Availablility Status' style='display: none;'>
+                                        <p>Confirm you want to change this property Availablility status.</p>
+                                    </div>
+                                </span>
+                            </li>
+                            <li>
+                                <a href="{{ i.get_absolute_url }}" class="btn-sm btn-primary"><i class="fa fa-eye"></i> View</a>
+                                <a href="{% url 'dashboard:product_update' slug=i.pid %}" class="btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a> 
+                                <a href="{% url 'dashboard:product_image_update' slug=i.pid %}" class="btn-sm btn-info"><i class="fa fa-photo"></i> Edit Pictures</a> 
+                                <a href="{% url 'dashboard:product_delete' slug=i.pid %}" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                            </li>  
+                        </ul>
+                    </div>
+                
+            {% cycle '' '' '<div class="clearfix"></div>' %}
+            {% empty %}
+            
+                <br><br><br>
+                <li class="lead text-center">No property yet.</li>
+                <br><br><br>
+            
+            {% endfor %} 
+            </div>           
+            <!-- /row -->
+
+
+            {% if object_list %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <div class="pagination">
+                          <ul class="pagination">
+                            {% if object_list.has_previous %}
+                              <!-- <li><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                              <li><a href="?page={{ object_list.previous_page_number }}"> << Previous </a></li>
+                            {% else %}
+                              <!-- <li class="disabled"><a href="?page=1"><i class="fa fa-arrow-left"></i> First</a></li> -->
+                              <li class="disabled"><a href="#"> << Previous </a></li>            
+                            {% endif %}
+
+                              <li><a> Page {{ object_list.number }} of {{ object_list.paginator.num_pages }} </a></li>
+
+                            {% if object_list.has_next %}
+                              <li><a href="?page={{ object_list.next_page_number }}"> Next >> </a></li>
+                              <!-- <li><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                            {% else %}            
+                              <li class="disabled"><a href="#"> Next >> </a></li>
+                              <!-- <li class="disabled"><a href="?page={{ object_list.paginator.num_pages }}">Last <i class="fa fa-arrow-right"></i></a></li> -->
+                            {% endif %}
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="white-box text-center">
+                    <h4 class="page-title">Do you need help? Contact Us.</h4>
+                    <p><i class="fa fa-phone"></i> 0809 446 6080</p>
+                    <p><i class="fa fa-envelope-o"></i> support@homelink.ng</p>
+                  </div>
+              </div>
+            </div>
+            <!-- /row -->
+        </div>
+        {% endblock content %}
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+   
+
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'dashboard/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dashboard/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
+{% endblock scripts %}
+
+
+
+{% block extra_scripts %}
+    <!-- custom jquery -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- using jQuery -->
+    <script type="text/javascript" src="{% static '/js/django.csrf.js' %}"></script>
+   
+
+{% endblock extra_scripts %}
+

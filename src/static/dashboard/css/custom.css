@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Style the list */
+.price-list {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  margin-bottom: 25px;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+/* Add shadows on hover */
+.price-list:hover {
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+/* Pricing header */
+.price-list .header {
+  background-color: #111;
+  color: white;
+  font-size: 25px;
+}
+
+/* List items */
+.price-list li {
+  border-bottom: 1px solid #eee;
+  padding: 12px;
+  text-align: center;
+}
+
+/* Grey list item */
+.price-list .price {
+  /*background-color: #eee;*/
+  font-size: 34px;
+  font-weight: bolder;
+}
+
+
+.price-list, .client-request li {
+  border-bottom: 1px solid #eee;
+  padding: 12px;
+  text-align: left;
+}
+
+
+
+/* Change the width of the three columns to 100% 
+(to stack horizontally on small screens) */
+@media only screen and (max-width: 600px) {
+  .columns {
+    width: 100%;
+  }
+}
+
+
+
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+.accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active_1, .accordion:hover {
+  background-color: #ccc;
+}
+
+.active_1:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+
+.panel p {
+	margin-top: 10px;
+	/*font-size: larger;*/
+}
+
+
+
+.user-bg .overlay-box {
+    background: #5a7468;
+}
+
+button.confirm-btn {
+	border: 1px solid #00C244 !important;
+	background: #00C244 !important;
+}
+
+button.confirm-btn, .ui-button {
+	color: #FFF !important;
+}
+
+button.cancel-btn {
+	border: 1px solid #DDDDDD !important;
+	background: #DDDDDD !important;
+}
+
+button.cancel-btn, .ui-button {
+	color: #333 !important;
+}
+
+.ui-widget-header {
+	border: 1px solid #FFFFFF !important;
+	background: #FFFFFF !important;	
+}
